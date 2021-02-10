@@ -30,7 +30,7 @@
       <v-list>
         <v-list-item v-for="n in 5" :key="n" link>
           <v-list-item-content>
-            <v-list-item-title>Item {{ n }}</v-list-item-title>
+            <v-list-item-title v-on:click="hide">Item {{ n }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -55,15 +55,15 @@
         </v-btn>
 
         <v-btn>
-          <span>Book</span>
+          <span>Album</span>
 
-          <v-icon>mdi-book</v-icon>
+          <v-icon>mdi-album</v-icon>
         </v-btn>
 
         <v-btn>
-          <span>Image</span>
+          <span>Playlist</span>
 
-          <v-icon>mdi-image</v-icon>
+          <v-icon>mdi-playlist-music</v-icon>
         </v-btn>
       </v-bottom-navigation>
     </v-footer>
@@ -84,15 +84,15 @@ export default {
     color() {
       switch (this.value) {
         case 0:
-          return "blue-grey";
+          return "#880E4F";
         case 1:
           return "teal";
         case 2:
-          return "brown";
+          return "cyan";
         case 3:
           return "indigo";
         default:
-          return "blue-grey";
+          return "#880E4F";
       }
     },
   },

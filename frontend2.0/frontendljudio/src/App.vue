@@ -8,12 +8,15 @@
 
 <script>
 import MediaDisplay from "./components/MediaDisplay";
+import PlaylistList from './components/PlaylistList.vue'
+
 
 export default {
   name: "App",
 
   components: {
     MediaDisplay,
+    PlaylistList  
   },
 
   data: () => ({
