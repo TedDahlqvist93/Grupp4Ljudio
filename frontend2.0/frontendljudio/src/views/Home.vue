@@ -2,7 +2,7 @@
   <v-app id="inspire">
     <v-app-bar app clipped-right flat height="72">
       <v-spacer></v-spacer>
-
+      <!-- Navbar with searchbar -->
       <v-responsive max-width="156">
         <v-text-field
           dense
@@ -13,7 +13,7 @@
         ></v-text-field>
       </v-responsive>
     </v-app-bar>
-
+    <!-- List with playlists  -->
     <v-navigation-drawer v-model="drawer" app width="300" class="">
       <v-sheet height="128" width="100%"></v-sheet>
 
@@ -25,12 +25,14 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-
+    <!-- List with songs -->
     <v-navigation-drawer app clipped right>
       <v-list>
         <v-list-item v-for="n in 5" :key="n" link>
           <v-list-item-content>
-            <v-list-item-title v-on:click="hide">Item {{ n }}</v-list-item-title>
+            <v-list-item-title v-on:click="hide"
+              >Item {{ n }}</v-list-item-title
+            >
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -39,7 +41,7 @@
     <v-main>
       <!--  -->
     </v-main>
-
+    <!-- navbar for mobilescreen -->
     <v-footer app color="transparent" height="72" inset>
       <v-bottom-navigation v-model="value" :background-color="color" dark shift>
         <v-btn>
