@@ -28,7 +28,7 @@ module.exports = (app, db) => {
   })
 
   // authentication: get logged in user
-  app.get('/api/login', async (request, response) => { 
+  app.get('/api/login', async (request, response) => {
     let user
     if(request.session.user){
       user = await db.query('SELECT * FROM users WHERE email = ? AND password = ?', [request.session.user.email, request.session.user.password])
@@ -107,6 +107,13 @@ module.exports = (app, db) => {
     }
     let result = await db.query("DELETE FROM examples WHERE id = ?", request.params.id)
     response.json(result)
+  })
+
+  // getter for playlist
+  // TODO: add :id param here later?
+  app.get('/api/playlist', async (request, response) => {
+      let data = await db.query('SELECT * FROM playlist')
+      response.json(data)
   })
 
 
