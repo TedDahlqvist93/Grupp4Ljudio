@@ -1,13 +1,26 @@
 <template>
-  <media-display>
+  <v-app>
+    <v-main>
+      <router-view></router-view>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
-import MediaDisplay from './components/MediaDisplay.vue'
+import MediaDisplay from "./components/MediaDisplay";
+import PlaylistList from './components/PlaylistList.vue'
+
+
 export default {
-  name: 'App',
+  name: "App",
+
   components: {
-    MediaDisplay
-  }
-}
+    MediaDisplay,
+    PlaylistList  
+  },
+
+  data: () => ({
+    //
+  }),
+};
 </script>

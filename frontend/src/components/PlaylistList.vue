@@ -18,7 +18,6 @@
 </template>
 
 <script>
-import data from '../httpReq.js'
 
 export default {
   name: 'PlaylistList',
