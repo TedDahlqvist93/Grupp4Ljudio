@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import MediaDisplay from "./components/MediaDisplay";
+import MediaDisplay from './components/MediaDisplay'
 import PlaylistList from './components/PlaylistList.vue'
 
 
