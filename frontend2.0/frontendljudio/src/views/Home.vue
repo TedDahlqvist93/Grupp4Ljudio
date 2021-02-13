@@ -1,76 +1,4 @@
-<template>
-  <v-app id="inspire">
-    <v-app-bar app clipped-right flat height="72">
-      <v-spacer></v-spacer>
-      <!-- Navbar with searchbar -->
-      <v-responsive max-width="156">
-        <v-text-field
-          dense
-          flat
-          hide-details
-          rounded
-          solo-inverted
-        ></v-text-field>
-      </v-responsive>
-    </v-app-bar>
-    <!-- List with playlists  -->
-    <v-navigation-drawer v-model="drawer" app width="300" class="">
-      <v-sheet height="128" width="100%"></v-sheet>
-
-      <v-list class="pl-14" shaped>
-        <v-list-item v-for="n in 5" :key="n" link>
-          <v-list-item-content>
-            <v-list-item-title>Item {{ n }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-    <!-- List with songs -->
-    <v-navigation-drawer app clipped right>
-      <v-list>
-        <v-list-item v-for="n in 5" :key="n" link>
-          <v-list-item-content>
-            <v-list-item-title v-on:click="hide"
-              >Item {{ n }}</v-list-item-title
-            >
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-
-    <v-main>
-      <!--  -->
-    </v-main>
-    <!-- navbar for mobilescreen -->
-    <v-footer app color="transparent" height="72" inset>
-      <v-bottom-navigation v-model="value" :background-color="color" dark shift>
-        <v-btn>
-          <span>Video</span>
-
-          <v-icon>mdi-television-play</v-icon>
-        </v-btn>
-
-        <v-btn>
-          <span>Music</span>
-
-          <v-icon>mdi-music-note</v-icon>
-        </v-btn>
-
-        <v-btn>
-          <span>Album</span>
-
-          <v-icon>mdi-album</v-icon>
-        </v-btn>
-
-        <v-btn>
-          <span>Playlist</span>
-
-          <v-icon>mdi-playlist-music</v-icon>
-        </v-btn>
-      </v-bottom-navigation>
-    </v-footer>
-  </v-app>
-</template>
+<template> </template>
 
 <script>
 // @ is an alias to /src
@@ -81,7 +9,14 @@ export default {
   components: {
     MediaDisplay,
   },
-  data: () => ({ value: 1 }),
+  data() {
+    return {
+      value: 1,
+      text: "",
+      firstname: "",
+    };
+  },
+
   computed: {
     color() {
       switch (this.value) {
@@ -96,6 +31,11 @@ export default {
         default:
           return "#880E4F";
       }
+    },
+  },
+  methods: {
+    submit() {
+      console.log(this.firstname);
     },
   },
 };
