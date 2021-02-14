@@ -16,7 +16,7 @@ export default {
   },
   async mounted() {
     let searchString = "";
-/*     let res = await fetch("/api/yt/songs/" + searchString);
+    /*     let res = await fetch("/api/yt/songs/" + searchString);
     let songs = await res.json(); 
     console.log(songs); */
     this.player = new YT.Player("yt-player", {
@@ -41,5 +41,3 @@ export default {
   },
 };
 </script>
-
-dQw4w9WgXcQ
