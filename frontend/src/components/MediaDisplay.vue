@@ -16,28 +16,33 @@ export default {
   },
   async mounted() {
     let searchString = "";
-    /*     let res = await fetch("/api/yt/songs/" + searchString);
-    let songs = await res.json(); 
-    console.log(songs); */
-    this.player = new YT.Player("yt-player", {
-      videoId: "dQw4w9WgXcQ",
-      height: "300",
-      width: "400",
-      playerVars: {
-        controls: 0,
-      },
-      events: {
-        onStateChange: this.onPlayerStateChange,
-      },
+    YT.ready(
+      function() {
+      player = new YT.Player("yt-player", {
+        videoId: "dQw4w9WgXcQ",
+        host: 'https://www.youtube.com',
+        height: "300",
+        width: "400",
+        playerVars: { 
+          autoplay: 0,
+          controls: 0
+          },
+        events: {
+          onStateChange: this.onPlayerStateChange
+        },
     });
+  })
   },
   methods: {
+
     playSong() {
-      this.player.loadVideoById(this.videoId);
+      this.player.loadVideoById(this.videoId)
     },
     onPlayerStateChange(event) {
-      if (event.data != YT.PlayerState.PLAYING) return;
-    },
-  },
-};
+      if (event.data != YT.PlayerState.PLAYING) return
+    }    
+  }
+}
 </script>
+
+dQw4w9WgXcQ
