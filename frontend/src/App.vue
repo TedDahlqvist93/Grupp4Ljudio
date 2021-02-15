@@ -92,14 +92,14 @@
 
 <script>
 import MediaDisplay from "./components/MediaDisplay";
-import PlaylistList from "./components/PlaylistList.vue";
+import SearchResults from "./components/SearchResults.vue";
 import Playlist from "./components/Playlist.vue";
 
 export default {
   name: "App",
   components: {
     MediaDisplay,
-    PlaylistList,
+    SearchResults,
     Playlist,
   },
   data() {

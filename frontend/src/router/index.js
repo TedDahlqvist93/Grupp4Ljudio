@@ -3,7 +3,7 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import MediaDisplay from "../components/MediaDisplay.vue";
 import Playlist from "../components/Playlist.vue";
-import SearchResult from "../components/SearchResult.vue";
+import SearchResults from "../components/SearchResults.vue";
 
 Vue.use(VueRouter);
 
@@ -14,7 +14,7 @@ const routes = [
     component: Home,
   },
   { path: "/playlist", component: Playlist },
-  { path: "/results", component: SearchResult },
+  { path: "/results", component: SearchResults },
   { path: "/media", component: MediaDisplay },
 ];
 
