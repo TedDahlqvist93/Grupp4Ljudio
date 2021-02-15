@@ -40,12 +40,6 @@
     </v-navigation-drawer>
 
     <v-main>
-      <router-link to="/playlist">/play</router-link>
-
-      <router-link to="/media">/media</router-link>
-
-      <router-link to="/playbar">bar</router-link>
-
       <v-card class="mx-auto" max-width="344">
         <v-card-text>
           <div>Word of the Day</div>
@@ -66,19 +60,19 @@
       <v-bottom-navigation v-model="value" :background-color="color" dark shift>
         {{ text }}
         <v-btn>
-          <span> <router-link to="/playlist">/play</router-link></span>
+          <span> <router-link to="/playlist">TestList</router-link> </span>
 
           <v-icon>mdi-television-play</v-icon>
         </v-btn>
 
         <v-btn>
-          <span>Music</span>
+          <span> <router-link to="/media">Media</router-link></span>
 
           <v-icon>mdi-music-note</v-icon>
         </v-btn>
 
         <v-btn>
-          <span></span>
+          <span> <router-link to="/play">PlayList</router-link></span>
 
           <v-icon>mdi-album</v-icon>
         </v-btn>
@@ -97,12 +91,14 @@
 <script>
 import MediaDisplay from "./components/MediaDisplay";
 import PlaylistList from "./components/PlaylistList.vue";
+import Playlist from "./components/Playlist.vue";
 
 export default {
   name: "App",
   components: {
     MediaDisplay,
     PlaylistList,
+    Playlist,
   },
   data() {
     return {
