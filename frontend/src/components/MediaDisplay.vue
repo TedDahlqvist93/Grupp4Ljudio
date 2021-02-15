@@ -1,9 +1,11 @@
 <template>
-  <div>
-    <!--  this div will contain the YouTube Player
+  <v-main>
+    <div>
+      <!--  this div will contain the YouTube Player
         when script gets loaded -->
-    <div id="yt-player"></div>
-  </div>
+      <div id="yt-player"></div>
+    </div>
+  </v-main>
 </template>
 
 <script>
@@ -16,33 +18,31 @@ export default {
   },
   async mounted() {
     let searchString = "";
-    YT.ready(
-      function() {
+    YT.ready(function() {
       player = new YT.Player("yt-player", {
         videoId: "dQw4w9WgXcQ",
-        host: 'https://www.youtube.com',
+        host: "https://www.youtube.com",
         height: "300",
         width: "400",
-        playerVars: { 
+        playerVars: {
           autoplay: 0,
-          controls: 0
-          },
-        events: {
-          onStateChange: this.onPlayerStateChange
+          controls: 0,
         },
+        events: {
+          onStateChange: this.onPlayerStateChange,
+        },
+      });
     });
-  })
   },
   methods: {
-
     playSong() {
-      this.player.loadVideoById(this.videoId)
+      this.player.loadVideoById(this.videoId);
     },
     onPlayerStateChange(event) {
-      if (event.data != YT.PlayerState.PLAYING) return
-    }    
-  }
-}
+      if (event.data != YT.PlayerState.PLAYING) return;
+    },
+  },
+};
 </script>
 
 dQw4w9WgXcQ
