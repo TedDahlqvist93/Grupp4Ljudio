@@ -60,7 +60,9 @@
       <v-bottom-navigation v-model="value" :background-color="color" dark shift>
         {{ text }}
         <v-btn>
-          <span> <router-link to="/playlist">TestList</router-link> </span>
+          <span>
+            <router-link to="/results">SearchResults</router-link>
+          </span>
 
           <v-icon>mdi-television-play</v-icon>
         </v-btn>
