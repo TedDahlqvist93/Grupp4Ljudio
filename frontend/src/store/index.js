@@ -16,7 +16,7 @@ export default new Vuex.Store({
         },
         currentSong: {
             id: null,
-            name: '',
+            title: '',
             artist: '',
             album: '',
         },
@@ -69,9 +69,53 @@ export default new Vuex.Store({
         }
     },
     actions: {
+        /*
+         TODO: Build API wrapper to call api requests
+         import API from '@api/index.js'
+         source-folder/api/index.js
+         */
+
+        // USER API
+        // 3000:/api/users
+
         getUserStatus(context) {
-            // update user status here?
-            // e.g login. logout
+            // fetch user and load into state
+        },
+        loginUser(contex) {
+            // delete user and load into state
+        },
+        registerUser(contex) {
+            // register user and load into state
+        },
+        logoutUser(contex) {
+            // logout user and load into state
+        },
+
+        // PLAYLIST API
+        // 3000:/api/playlists
+
+        getPlaylist(playlistId) {
+            // fetch playlists and load into state
+            // 3000:/api/playlists/:id
+        },
+        addPlaylist(playlistId) {
+            // add playlist and load into state
+        },
+        deletePlaylist(playlistId) {
+            // delete playlist and load into state
+        },
+
+        // SONGS API
+        // 3000:/api/playlists
+
+        getSongs(songId) {
+            // fetch songs and load into state
+        },
+        addSong(songId) {
+            // add song here load into state
+        },
+        deleteSong(songId) {
+            // delete song and load into state
         }
     },
 });
