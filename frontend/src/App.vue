@@ -94,6 +94,7 @@
 import MediaDisplay from "./components/MediaDisplay";
 import SearchResults from "./components/SearchResults.vue";
 import Playlist from "./components/Playlist.vue";
+import store from "./store/index";
 
 export default {
   name: "App",

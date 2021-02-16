@@ -1,35 +1,36 @@
 <template>
-  <v-main>
-    <div>
-      <h1>Playlist</h1>
-      <ul>
-        <li v-for="song in playlist" :key="song.playlist">
-          {{ song.playlist }}
-        </li>
-      </ul>
-
-      <!--  -->
+  <div class="hello">
+    <h1>{{ msg }}</h1>
+    <h1>Made By Getters</h1>
+    <div v-for="gettersuser in gettersusers" :key="gettersuser.id">
+      {{ gettersuser.id }} {{ gettersuser.name }} {{ gettersuser.address }}
     </div>
-  </v-main>
+    <h1>Made By Actions</h1>
+    <div v-for="user in users" :key="user.id">
+      {{ user.id }} {{ user.name }} {{ user.address }}
+    </div>
+    <h1>nsdnjhebjb</h1>
+  </div>
 </template>
 
 <script>
 export default {
-  name: "Playlist",
+  name: "myStore",
   data() {
     return {
-      playlist: {
-        name: String,
-        songs: [],
-      },
+      msg: "Welcome to my Vuex Store",
     };
   },
-  async created() {
-    const res = await fetch("/api/playlist" + this.route.$id);
-    const data = await res.json();
-    this.playlist = data;
+  computed: {
+    gettersusers() {
+      return this.$store.getters.allUsers;
+    },
+    users() {
+      return this.$store.state.users;
+    },
+  },
+  mounted() {
+    this.$store.dispatch("getUsers");
   },
 };
 </script>
-
-<style scoped></style>
