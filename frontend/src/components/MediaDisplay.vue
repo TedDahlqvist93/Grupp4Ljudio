@@ -13,25 +13,32 @@ export default {
   data() {
     return {
       player: null,
-      videoId: "",
     };
+  },
+  computed: {
+    videoId() {
+      return this.$store.state.currentsong;
+    },
+  },
+  watch: {
+    videoId(id) {
+      this.player.loadVideoById(id);
+    },
   },
   async mounted() {
     let searchString = "";
-    YT.ready(function() {
-      player = new YT.Player("yt-player", {
-        videoId: "dQw4w9WgXcQ",
-        host: "https://www.youtube.com",
-        height: "300",
-        width: "400",
-        playerVars: {
-          autoplay: 0,
-          controls: 0,
-        },
-        events: {
-          onStateChange: this.onPlayerStateChange,
-        },
-      });
+
+    this.player = new YT.Player("yt-player", {
+      host: "https://www.youtube.com",
+      height: "300",
+      width: "400",
+      playerVars: {
+        autoplay: 1,
+        controls: 0,
+      },
+      events: {
+        onStateChange: this.onPlayerStateChange,
+      },
     });
   },
   methods: {

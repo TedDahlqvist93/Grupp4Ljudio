@@ -5,14 +5,21 @@
       <!-- Navbar with searchbar -->
       <v-responsive max-width="156">
         <v-text-field
-          v-model="text"
+          v-model="query"
           dense
           flat
           rounded
           solo-inverted
         ></v-text-field>
       </v-responsive>
-      <v-btn @click="SearchFor()">Search</v-btn>
+      <v-btn
+        rounded
+        small
+        color="primary"
+        dark
+        @click="getSearchResults(query)"
+      >
+      </v-btn>
     </v-app-bar>
 
     <!-- List with playlists  -->
@@ -42,6 +49,7 @@
 
     <v-main> </v-main>
     <!-- navbar for mobilescreen -->
+    <media-display></media-display>
     <v-footer app color="transparent" height="72" inset>
       <v-bottom-navigation v-model="value" :background-color="color" dark shift>
         {{ text }}
@@ -77,11 +85,11 @@
 </template>
 
 <script>
-import MediaDisplay from "./components/MediaDisplay";
 import SearchResults from "./components/SearchResults.vue";
 import Playlist from "./components/Playlist.vue";
 import store from "./store/index";
 import { mapActions, mapGetters } from "vuex";
+import MediaDisplay from "./components/MediaDisplay.vue";
 
 export default {
   name: "App",
@@ -89,12 +97,13 @@ export default {
     MediaDisplay,
     SearchResults,
     Playlist,
+    MediaDisplay,
   },
   data() {
     return {
       value: 1,
       text: "",
-      textinput: "",
+      query: "",
     };
   },
   computed: {
