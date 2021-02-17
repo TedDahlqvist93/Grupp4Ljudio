@@ -16,18 +16,17 @@ export default new Vuex.Store({
     //----------------------------------------------------------------------
     insertContent({ commit }) {
       axios
-        .get("localhost:3000/api/yt/albums/search+string")
+        .get("/api/yt/albums/search+string")
         .then((r) => r.data)
         .then((content) => {
-          commit("SET_CONTENT", content);
+          commit("SET_CONTENT", content.content);
+          console.log(content.content);
         });
     },
     //------------------------------------------------------------------------
 
     async getSearchResults({ commit }, query) {
-      const res = await axios.get(
-        `http://localhost:3000/api/yt/albums/search+string${query}`
-      );
+      const res = await axios.get(`/api/yt/albums/search+string${query}`);
       // Execute the mutation which receive the data and pass to the state
       commit("returnResults", res.data.name);
     },
