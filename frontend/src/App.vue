@@ -1,17 +1,25 @@
 <template>
   <v-app id="inspire">
-    <v-app-bar app clipped-right flat height="72">
+    <v-app-bar app clipped-left flat height="72">
       <v-spacer></v-spacer>
       <!-- Navbar with searchbar -->
       <v-responsive max-width="156">
         <v-text-field
-          v-model="text"
+          v-model="query"
           dense
           flat
           rounded
           solo-inverted
         ></v-text-field>
       </v-responsive>
+      <v-btn
+        rounded
+        small
+        color="primary"
+        dark
+        @click="getSearchResults(query)"
+      >
+      </v-btn>
     </v-app-bar>
 
     <!-- List with playlists  -->
@@ -30,31 +38,47 @@
 
     <!-- List with songs -->
     <v-navigation-drawer app clipped right>
-        <Playlist/>
+      <v-list>
+        <v-list-item v-for="n in 5" :key="n" link>
+          <v-list-item-content>
+            <v-list-item-title>Item {{ n }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
     </v-navigation-drawer>
 
-    <v-main>
-      <v-card class="mx-auto" max-width="344">
-        <v-card-text>
-          <div>Word of the Day</div>
-          <p class="display-1 text--primary">
-            be•nev•o•lent
-          </p>
-          <p>adjective</p>
-          <div class="text--primary">
-            well meaning and kindly.<br />
-            "a benevolent smile"
-          </div>
-        </v-card-text>
-      </v-card>
-      <!--  -->
-    </v-main>
+    <v-main> </v-main>
+
     <!-- navbar for mobilescreen -->
-    <v-footer app color="transparent" height="72" inset>
+
+    <media-display></media-display>
+    <v-footer app color="transparent" height="140" inset>
+      <v-app-bar inset>
+        <v-btn color="transparent" width="15%">
+          <v-icon>mdi-skip-previous-circle</v-icon>
+        </v-btn>
+        <v-btn color="transparent" width="15%">
+          <v-icon>mdi-play</v-icon>
+        </v-btn>
+        <v-btn color="transparent" width="15%">
+          <v-icon>mdi-pause</v-icon>
+        </v-btn>
+        <v-btn color="transparent" width="15%">
+          <v-icon>mdi-skip-next-circle</v-icon>
+        </v-btn>
+        <v-slider
+          min="0"
+          max="100"
+          value="100"
+          thumb-label
+          prepend-icon="mdi-volume-high"
+        ></v-slider>
+      </v-app-bar>
       <v-bottom-navigation v-model="value" :background-color="color" dark shift>
-        {{ text }}
         <v-btn>
-          <span> <router-link to="/playlist">TestList</router-link> </span>
+          <span>
+            <router-link to="/results">SearchResults</router-link>
+          </span>
 
           <v-icon>mdi-television-play</v-icon>
         </v-btn>
@@ -83,22 +107,24 @@
 </template>
 
 <script>
-import MediaDisplay from "./components/MediaDisplay";
-import PlaylistList from "./components/PlaylistList.vue";
+import SearchResults from "./components/SearchResults.vue";
 import Playlist from "./components/Playlist.vue";
-
+import store from "./store/index";
+import { mapActions, mapGetters } from "vuex";
+import MediaDisplay from "./components/MediaDisplay.vue";
 export default {
   name: "App",
   components: {
     MediaDisplay,
-    PlaylistList,
+    SearchResults,
     Playlist,
+    MediaDisplay,
   },
   data() {
     return {
       value: 1,
       text: "",
-      firstname: "",
+      query: "",
     };
   },
   computed: {
@@ -116,11 +142,10 @@ export default {
           return "#880E4F";
       }
     },
+    ...mapGetters(["searchResult"]),
   },
   methods: {
-    submit() {
-      console.log(this.firstname);
-    },
+    ...mapActions(["getSearchResults"]),
   },
 };
 </script>
