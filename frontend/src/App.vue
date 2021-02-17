@@ -1,6 +1,6 @@
 <template>
   <v-app id="inspire">
-    <v-app-bar app clipped-right flat height="72">
+    <v-app-bar app clipped-left flat height="72">
       <v-spacer></v-spacer>
       <!-- Navbar with searchbar -->
       <v-responsive max-width="156">
@@ -12,7 +12,7 @@
           solo-inverted
         ></v-text-field>
       </v-responsive>
-      <v-btn @click="SearchFor()">Search</v-btn>
+      <v-btn app inset @click="SearchFor()" width="40%">Search</v-btn>
     </v-app-bar>
 
     <!-- List with playlists  -->
@@ -41,10 +41,28 @@
     </v-navigation-drawer>
 
     <v-main> </v-main>
+    
     <!-- navbar for mobilescreen -->
-    <v-footer app color="transparent" height="72" inset>
+    <v-footer app color="transparent" height="140" inset>
+      <v-app-bar inset>
+        <v-btn color="transparent" width="15%">
+        <v-icon>mdi-skip-previous-circle</v-icon>
+      </v-btn>
+      <v-btn color="transparent" width="15%">
+        <v-icon>mdi-play</v-icon>
+      </v-btn>
+      <v-btn color="transparent" width="15%" >
+        <v-icon>mdi-pause</v-icon>
+      </v-btn>
+      <v-btn color="transparent" width="15%">
+        <v-icon>mdi-skip-next-circle</v-icon>
+      </v-btn>
+      <v-slider min="0" max="100" value="100" thumb-label prepend-icon="mdi-volume-high"></v-slider>
+      
+
+    </v-app-bar>
       <v-bottom-navigation v-model="value" :background-color="color" dark shift>
-        {{ text }}
+        
         <v-btn>
           <span>
             <router-link to="/results">SearchResults</router-link>
@@ -71,6 +89,7 @@
           <v-icon>mdi-playlist-music</v-icon>
         </v-btn>
       </v-bottom-navigation>
+      
     </v-footer>
     <router-view></router-view>
   </v-app>
