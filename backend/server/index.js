@@ -19,21 +19,21 @@ app.use(cookieParser());
 const session = require("express-session");
 // register as middleware
 app.use(
-  session({
-    secret: "keyboard cat boddyfollymeskaweq456",
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false }, // ändra till true för secure cookie (felsöka behövs här nu)
-  })
+    session({
+        secret: "keyboard cat boddyfollymeskaweq456",
+        resave: false,
+        saveUninitialized: true,
+        cookie: {secure: false}, // ändra till true för secure cookie (felsöka behövs här nu)
+    })
 );
 
 // mysql
 const mysql = require("mysql");
 const db = mysql.createConnection({
-  host: "127.0.0.1",
-  user: "root",
-  password: "mysql",
-  database: "nodemusic",
+    host: "127.0.0.1",
+    user: "root",
+    password: "mysql",
+    database: "nodemusic",
 });
 // vi gör om mysql-metoderna connect och query till promise-metoder så att vi kan använda async/await för att vänta på databasen
 const util = require("util");
@@ -52,6 +52,6 @@ app.use(express.static(path.join(__dirname, "../example-client")));
 
 // start the server
 app.listen(3000, async () => {
-  await db.connect();
-  console.log("server running on port 3000");
+    await db.connect();
+    console.log("server running on port 3000");
 });

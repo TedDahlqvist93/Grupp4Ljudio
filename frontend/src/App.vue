@@ -30,25 +30,8 @@
 
     <!-- List with songs -->
     <v-navigation-drawer app clipped right>
-        <Playlist/>
+        <Register/>
     </v-navigation-drawer>
-
-    <v-main>
-      <v-card class="mx-auto" max-width="344">
-        <v-card-text>
-          <div>Word of the Day</div>
-          <p class="display-1 text--primary">
-            be•nev•o•lent
-          </p>
-          <p>adjective</p>
-          <div class="text--primary">
-            well meaning and kindly.<br />
-            "a benevolent smile"
-          </div>
-        </v-card-text>
-      </v-card>
-      <!--  -->
-    </v-main>
     <!-- navbar for mobilescreen -->
     <v-footer app color="transparent" height="72" inset>
       <v-bottom-navigation v-model="value" :background-color="color" dark shift>
@@ -86,6 +69,7 @@
 import MediaDisplay from "./components/MediaDisplay";
 import PlaylistList from "./components/PlaylistList.vue";
 import Playlist from "./components/Playlist.vue";
+import Register from "./components/Register.vue";
 
 export default {
   name: "App",
@@ -93,6 +77,7 @@ export default {
     MediaDisplay,
     PlaylistList,
     Playlist,
+    Register,
   },
   data() {
     return {

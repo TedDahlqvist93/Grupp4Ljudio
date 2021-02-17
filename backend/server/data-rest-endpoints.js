@@ -1,11 +1,11 @@
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcrypt")
 
 module.exports = (app, db) => {
-    // Authentication routes
 
     // register user
     app.post("/api/users", async (request, response) => {
-        let password = await bcrypt.hash(request.body.password, 10);
+        console.log(request)
+        let password = await bcrypt.hash(request.password, 10);
         let result = await db.query("INSERT INTO users SET ?", {
             ...request.body,
             password,
@@ -126,7 +126,7 @@ module.exports = (app, db) => {
      * album: string
      */
 
-    // Endpoint: Get Song
+    // Endpoint: Get Songs
     // Param: playlist id (id)
     app.get('/api/songs/:id', async (request, response) => {
         if (!request.session.user) {
@@ -140,7 +140,6 @@ module.exports = (app, db) => {
             WHERE id = ?`, request.params.id)
         response.json(result);
     })
-
 
     // Endpoint: Add Song
     // Param: playlist id (id)
@@ -238,3 +237,4 @@ module.exports = (app, db) => {
         );
         response.json(result);
     });
+}

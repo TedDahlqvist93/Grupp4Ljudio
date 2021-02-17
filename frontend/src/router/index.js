@@ -1,27 +1,23 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
-import MediaDisplay from "../components/MediaDisplay.vue";
-import PlaylistList from "../components/PlaylistList.vue";
-import Playlist from "../components/Playlist.vue";
+import Register from "../components/Register.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
-  {
-    path: "/",
-    name: "Home",
-    component: Home,
-  },
-  { path: "/play", component: Playlist },
-  { path: "/playlist", component: PlaylistList },
-  { path: "/media", component: MediaDisplay },
+    {
+        path: "/",
+        name: "Home",
+        component: Home,
+    },
+    {path: "/register", name: "Register", component: Register},
 ];
 
 const router = new VueRouter({
-  mode: "history",
-  base: process.env.BASE_URL,
-  routes,
+    mode: "history",
+    base: process.env.BASE_URL,
+    routes,
 });
 
 export default router;

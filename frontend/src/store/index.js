@@ -1,6 +1,10 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import User from '../api/User.js'
+import Song from '../api/Songs.js'
+import Playlist from '../api/Playlists.js'
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -69,30 +73,37 @@ export default new Vuex.Store({
         }
     },
     actions: {
-        /*
-         TODO: Build API wrapper to call api requests
-         import API from '@api/index.js'
-         source-folder/api/index.js
-         */
-
-        // USER API
-        // 3000:/api/users
-
         getUserStatus(context) {
             // fetch user and load into state
         },
-        loginUser(contex) {
-            // delete user and load into state
+        loginUser(form) {
+            User.login(form.email, form.password)
+                .then((response) => {
+                    console.log(response);
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
         },
-        registerUser(contex) {
-            // register user and load into state
+        async registerUser(form) {
+            await User.register(form.email, form.password)
+                .then((response) => {
+                    return response
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
         },
-        logoutUser(contex) {
-            // logout user and load into state
+        logoutUser(form) {
+            User.logout(form.email, form.password)
+                .then((response) => {
+                    console.log(response);
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
         },
 
-        // PLAYLIST API
-        // 3000:/api/playlists
 
         getPlaylist(playlistId) {
             // fetch playlists and load into state
