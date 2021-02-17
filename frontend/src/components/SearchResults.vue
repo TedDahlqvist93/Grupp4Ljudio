@@ -1,11 +1,36 @@
 <template>
-  <div id="border"></div>
+  <v-main>
+    <div>
+      <h1>Playlist</h1>
+      <ul>
+        <li
+          @click="setSong(song.videoId)"
+          v-for="song in content"
+          :key="song.videoId"
+        >
+          {{ song.name }}
+        </li>
+      </ul>
+
+      <!--  -->
+    </div>
+  </v-main>
 </template>
 
 <script>
 export default {
   name: "SearchResults",
-  methods: {},
+
+  computed: {
+    content() {
+      return this.$store.state.results;
+    },
+  },
+  methods: {
+    setSong(videoId) {
+      this.$store.commit("SET_SONG", videoId);
+    },
+  },
 };
 </script>
 <style>

@@ -5,14 +5,21 @@
       <!-- Navbar with searchbar -->
       <v-responsive max-width="156">
         <v-text-field
-          v-model="text"
+          v-model="query"
           dense
           flat
           rounded
           solo-inverted
         ></v-text-field>
       </v-responsive>
-      <v-btn app inset @click="SearchFor()" width="40%">Search</v-btn>
+      <v-btn
+        rounded
+        small
+        color="primary"
+        dark
+        @click="getSearchResults(query)"
+      >
+      </v-btn>
     </v-app-bar>
 
     <!-- List with playlists  -->
@@ -43,6 +50,9 @@
     <v-main> </v-main>
     
     <!-- navbar for mobilescreen -->
+    
+
+      <media-display></media-display>
     <v-footer app color="transparent" height="140" inset>
       <v-app-bar inset>
         <v-btn color="transparent" width="15%">
@@ -60,8 +70,7 @@
       <v-slider min="0" max="100" value="100" thumb-label prepend-icon="mdi-volume-high"></v-slider>
       
 
-    </v-app-bar>
-      <v-bottom-navigation v-model="value" :background-color="color" dark shift>
+      </v-app-bar>      <v-bottom-navigation v-model="value" :background-color="color" dark shift>
         
         <v-btn>
           <span>
@@ -96,11 +105,11 @@
 </template>
 
 <script>
-import MediaDisplay from "./components/MediaDisplay";
 import SearchResults from "./components/SearchResults.vue";
 import Playlist from "./components/Playlist.vue";
 import store from "./store/index";
 import { mapActions, mapGetters } from "vuex";
+import MediaDisplay from "./components/MediaDisplay.vue";
 
 export default {
   name: "App",
@@ -108,12 +117,13 @@ export default {
     MediaDisplay,
     SearchResults,
     Playlist,
+    MediaDisplay,
   },
   data() {
     return {
       value: 1,
       text: "",
-      textinput: "",
+      query: "",
     };
   },
   computed: {
