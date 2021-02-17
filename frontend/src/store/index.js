@@ -1,41 +1,41 @@
-// import dependency to handle HTTP request to our back end
-import axios from "axios";
-import Vuex from "vuex";
 import Vue from "vue";
+import Vuex from "vuex";
+import axios from "axios";
+import VueAxios from "vue-axios";
 
-//load Vuex
 Vue.use(Vuex);
+Vue.use(VueAxios, axios);
 
-//to handle state
-const state = {
-  content: [],
-};
-
-//to handle state
-const getters = {
-  allUsers: (state) => state.users,
-};
-
-//to handle actions
-const actions = {
-  getAlbum({ commit }) {
-    axios.get("https://jsonplaceholder.typicode.com/users").then((response) => {
-      commit("SET_ALBUM", response.data);
-    });
-  },
-};
-
-//to handle mutations
-const mutations = {
-  SET_ALBUM(state, content) {
-    state.content = content;
-  },
-};
-
-//export store module
 export default new Vuex.Store({
-  state,
-  getters,
-  actions,
-  mutations,
+  state: {
+    content: [],
+    results: [],
+  },
+  getters: {},
+  actions: {
+    //----------------------------------------------------------------------
+    insertContent({ commit }) {
+      axios
+        .get("localhost:3000/api/yt/albums/search+string")
+        .then((r) => r.data)
+        .then((content) => {
+          commit("SET_CONTENT", content);
+        });
+    },
+    //------------------------------------------------------------------------
+
+    async getSearchResults({ commit }, query) {
+      const res = await axios.get(
+        `http://localhost:3000/api/yt/albums/search+string${query}`
+      );
+      // Execute the mutation which receive the data and pass to the state
+      commit("returnResults", res.data.name);
+    },
+  },
+  mutations: {
+    SET_CONTENT(state, content) {
+      state.content = content;
+    },
+    returnResults: (state, results) => (state.results = results),
+  },
 });

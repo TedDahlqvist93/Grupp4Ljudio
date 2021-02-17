@@ -12,6 +12,7 @@
           solo-inverted
         ></v-text-field>
       </v-responsive>
+      <v-btn @click="SearchFor()">Search</v-btn>
     </v-app-bar>
 
     <!-- List with playlists  -->
@@ -39,22 +40,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-main>
-      <v-card class="mx-auto" max-width="344">
-        <v-card-text>
-          <div>Word of the Day</div>
-          <p class="display-1 text--primary">
-            be•nev•o•lent
-          </p>
-          <p>adjective</p>
-          <div class="text--primary">
-            well meaning and kindly.<br />
-            "a benevolent smile"
-          </div>
-        </v-card-text>
-      </v-card>
-      <!--  -->
-    </v-main>
+    <v-main> </v-main>
     <!-- navbar for mobilescreen -->
     <v-footer app color="transparent" height="72" inset>
       <v-bottom-navigation v-model="value" :background-color="color" dark shift>
@@ -95,6 +81,7 @@ import MediaDisplay from "./components/MediaDisplay";
 import SearchResults from "./components/SearchResults.vue";
 import Playlist from "./components/Playlist.vue";
 import store from "./store/index";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "App",
@@ -107,7 +94,7 @@ export default {
     return {
       value: 1,
       text: "",
-      firstname: "",
+      textinput: "",
     };
   },
   computed: {
@@ -125,11 +112,10 @@ export default {
           return "#880E4F";
       }
     },
+    ...mapGetters(["searchResult"]),
   },
   methods: {
-    submit() {
-      console.log(this.firstname);
-    },
+    ...mapActions(["getSearchResults"]),
   },
 };
 </script>

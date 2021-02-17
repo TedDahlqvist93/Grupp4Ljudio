@@ -1,35 +1,11 @@
 <template>
-  <div id="border">
-    <div id="buttons">
-      <button v-on:click="toggleVideo()">Toggle Video</button>
-      <button v-on:click="toggleMusic() && getItems()">Toggle Music</button>
-    </div>
-    <div>
-      <ul>
-        <!-- <div v-for="item in playlists": key=""></div> -->
-        <li>Swooow</li>
-        <li>Test</li>
-        <li>playlists</li>
-        <li>get it</li>
-      </ul>
-    </div>
-  </div>
+  <div id="border"></div>
 </template>
 
 <script>
 export default {
   name: "SearchResults",
-  methods: {
-    toggleVideo() {
-      alert("Toggled Video");
-    },
-    toggleMusic() {
-      alert("Toggled Audio");
-    },
-    getItems() {
-      console.log();
-    },
-  },
+  methods: {},
 };
 </script>
 <style>
