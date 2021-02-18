@@ -10,8 +10,10 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         user: {
-            id: null,
+            id: '',
             email: '',
+            firstName: '',
+            lastName: '',
             loggedIn: false,
         },
         player: {
@@ -39,6 +41,9 @@ export default new Vuex.Store({
         }
     },
     getters: {
+        getUser: state => {
+            return state.user;
+        },
         getIsPlaying: state => {
             return state.isPlaying;
         },
@@ -56,8 +61,12 @@ export default new Vuex.Store({
         }
     },
     mutations: {
+        setUser: (state, status) => {
+            console.log(status)
+            state.user = status;
+        },
         setIsPlaying: (state, status) => {
-            state.isPlaying = status
+            state.isPlaying = status;
         },
         setShowVideo: (state, status) => {
             state.showVideo = status;
@@ -73,60 +82,103 @@ export default new Vuex.Store({
         }
     },
     actions: {
-        getUserStatus(context) {
-            // fetch user and load into state
-        },
-        loginUser(form) {
-            User.login(form.email, form.password)
-                .then((response) => {
-                    console.log(response);
-                })
-                .catch((error) => {
-                    console.log(error);
-                })
-        },
-        async registerUser(form) {
-            await User.register(form.email, form.password)
-                .then((response) => {
+        async getUser(data) {
+            await User.getStatus(1)
+                .then(response => {
+                    console.log(response)
                     return response
                 })
                 .catch((error) => {
                     console.log(error);
                 })
         },
-        logoutUser(form) {
-            User.logout(form.email, form.password)
-                .then((response) => {
-                    console.log(response);
+        async login({commit}, data) {
+            await User.login(data)
+                .then(response => {
+                    commit('setUser', response.data)
                 })
-                .catch((error) => {
+                .catch(error => {
+                    console.log(error);
+                })
+        },
+        async register({commit}, data) {
+            await User.register(data)
+                .then(response => {
+                    commit('setUser', response.data)
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+        },
+        async logout({commit}, data) {
+            await User.logout(data)
+                .then(response => {
+                    commit('setUser', {
+                        id: '',
+                        email: '',
+                        firstName: '',
+                        lastName: '',
+                        loggedIn: false,
+                    })
+                })
+                .catch(error => {
                     console.log(error);
                 })
         },
 
-
-        getPlaylist(playlistId) {
-            // fetch playlists and load into state
-            // 3000:/api/playlists/:id
+        async getPlaylists(data) {
+            Playlist.get(data)
+                .then(response => {
+                    console.log(response);
+                })
+                .catch(error => {
+                    console.log(error);
+                })
         },
-        addPlaylist(playlistId) {
-            // add playlist and load into state
+        async addPlaylist(data) {
+            Playlist.add(data)
+                .then(response => {
+                    console.log(response);
+                })
+                .catch(error => {
+                    console.log(error);
+                })
         },
-        deletePlaylist(playlistId) {
-            // delete playlist and load into state
+        async deletePlaylist(data) {
+            Playlist.remove(data)
+                .then(response => {
+                    console.log(response);
+                })
+                .catch(error => {
+                    console.log(error);
+                })
         },
-
-        // SONGS API
-        // 3000:/api/playlists
-
-        getSongs(songId) {
-            // fetch songs and load into state
+        async getSongs(data) {
+            Song.get(data)
+                .then(response => {
+                    console.log(response);
+                })
+                .catch(error => {
+                    console.log(error);
+                })
         },
-        addSong(songId) {
-            // add song here load into state
+        async addSong(data) {
+            Song.add(data)
+                .then(response => {
+                    console.log(response);
+                })
+                .catch(error => {
+                    console.log(error);
+                })
         },
-        deleteSong(songId) {
-            // delete song and load into state
+        async deleteSong(data) {
+            Song.remove(data)
+                .then(response => {
+                    console.log(response);
+                })
+                .catch(error => {
+                    console.log(error);
+                })
         }
     },
 });
