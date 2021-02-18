@@ -29,7 +29,9 @@ export default {
         title: song.name,
         artist: song.artist.name,
         album: song.album.name
-      });
+      })
+      this.$store.commit("setIsPlaying", true);
+      ;
     },
   },
 };

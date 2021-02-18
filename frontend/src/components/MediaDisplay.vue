@@ -1,9 +1,7 @@
 <template>
   <v-main>
     <div>
-      <!--  this div will contain the YouTube Player
-        when script gets loaded -->
-      <youtube :video-id="videoId" ref="youtube" :player-vars="playerVars"  resize></youtube>
+      <youtube :video-id="videoId" ref="youtube" :player-vars="playerVars" fitParent resize></youtube>
     </div>
   </v-main>
 </template>

@@ -40,10 +40,10 @@
         <v-btn color="white" width="15%" @click="playPrevious()">
           <v-icon>mdi-skip-previous-circle</v-icon>
         </v-btn>
-        <v-btn v-if="!this.$store.state.isPlaying" color="white" width="15%" @click="play()">
+        <v-btn v-if="!this.$store.state.player.isPlaying" color="white" width="15%" @click="play(true)">
           <v-icon>mdi-play</v-icon>
         </v-btn>
-        <v-btn v-else color="white" width="15%" @click="pause()">
+        <v-btn v-else color="white" width="15%" @click="play(false)">
           <v-icon>mdi-pause</v-icon>
         </v-btn>
         <v-btn color="white" width="15%" @click="playNext()">
@@ -105,11 +105,9 @@ export default {
   },
   methods: {
     ...mapActions(["searchSong"]),
-    play(){
-      this.$store.commit("setIsPlaying", true);
-    },
-    pause(){
-      this.$store.commit("setIsPlaying", false);
+    play(bool){
+        this.$store.commit("setIsPlaying", bool)
+      
     },
     search(query) {
       this.searchSong(query)
