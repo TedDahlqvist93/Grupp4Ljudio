@@ -39,7 +39,8 @@ export default new Vuex.Store({
         searchList: {
             search: '',
             songs: [],
-        }
+        },
+        isPlaying: false
     },
     getters: {
         getUser: state => {

@@ -45,17 +45,17 @@
 
     <media-display></media-display>
     <v-footer app color="transparent" height="140" inset>
-      <v-app-bar inset>
-        <v-btn color="transparent" width="15%" @click="playPrevious()">
+      <v-app-bar color="green" inset>
+        <v-btn color="white" width="15%" @click="playPrevious()">
           <v-icon>mdi-skip-previous-circle</v-icon>
         </v-btn>
-        <v-btn color="transparent" width="15%" @click="play()">
+        <v-btn color="white" width="15%" @click="play()">
           <v-icon>mdi-play</v-icon>
         </v-btn>
-        <v-btn color="transparent" width="15%" @click="pause()">
+        <v-btn color="white" width="15%" @click="pause()">
           <v-icon>mdi-pause</v-icon>
         </v-btn>
-        <v-btn color="transparent" width="15%" @click="playNext()">
+        <v-btn color="white" width="15%" @click="playNext()">
           <v-icon>mdi-skip-next-circle</v-icon>
         </v-btn>
         <v-slider
@@ -141,6 +141,12 @@ export default {
   },
   methods: {
     ...mapActions(["searchSong"]),
+    play(){
+      this.$store.commit("setIsPlaying", true);
+    },
+    pause(){
+      this.$store.commit("setIsPlaying", false);
+    }
   },
 };
 </script>
