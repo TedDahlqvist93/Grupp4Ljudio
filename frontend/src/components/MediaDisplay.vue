@@ -27,7 +27,8 @@ export default {
   },
   async mounted() {
     let searchString = "";
-    this.player = new YT.Player("yt-player", {
+    window.YT.ready(function (){
+      this.player = new YT.Player("yt-player", {
       host: "https://www.youtube.com",
       height: "300",
       width: "400",
@@ -38,7 +39,9 @@ export default {
       events: {
         onStateChange: this.onPlayerStateChange,
       },
-    });
+    })})
+    
+ 
   },
   methods: {
     playSong() {
