@@ -24,7 +24,7 @@
     </v-app-bar>
 
     <!-- List with playlists  -->
-    <v-navigation-drawer v-model="drawer" app width="300" class="">
+    <v-navigation-drawer app width="300" class="">
       <SearchResults/>
     </v-navigation-drawer>
 
