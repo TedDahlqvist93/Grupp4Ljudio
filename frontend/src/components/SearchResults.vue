@@ -1,9 +1,9 @@
 <template>
   <div>
-    <h1 @click="print">Search {{result.search}}</h1>
+    <h1>Search {{this.$store.state.searchList.search}}</h1>
     <ul>
-      <li @click="setSong(song.videoId)" v-for="song in result.songs" :key="song">
-        {{song.name}}-{{song.artist.name}}
+      <li @click="setSong(song.videoId)" v-for="song in this.$store.state.searchList.songs" :key="song.browseId">
+        {{ song.name }}-{{ song.artist.name}}
       </li>
     </ul>
   </div>
@@ -16,7 +16,7 @@ export default {
   name: "SearchResults",
   data() {
     return {
-      result: this.getSearchList(),
+      result: this.$store.state.searchList,
     }
   },
   computed: {
@@ -26,9 +26,6 @@ export default {
     setSong(videoId) {
       this.$store.commit("setCurrentSong", videoId);
     },
-    print(){
-      console.log(this.$store.state.searchList)
-    }
   },
 };
 </script>

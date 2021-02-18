@@ -131,6 +131,10 @@ export default {
     ...mapGetters(["getSearchList"]),
   },
   methods: {
+        ...mapActions(["searchSong"]),
+        search(query) {
+          this.searchSong(query)
+        }
   },
 };
 </script>
