@@ -46,16 +46,16 @@
     <media-display></media-display>
     <v-footer app color="transparent" height="140" inset>
       <v-app-bar inset>
-        <v-btn color="transparent" width="15%">
+        <v-btn color="transparent" width="15%" @click="playPrevious()">
           <v-icon>mdi-skip-previous-circle</v-icon>
         </v-btn>
-        <v-btn color="transparent" width="15%">
+        <v-btn color="transparent" width="15%" @click="play()">
           <v-icon>mdi-play</v-icon>
         </v-btn>
-        <v-btn color="transparent" width="15%">
+        <v-btn color="transparent" width="15%" @click="pause()">
           <v-icon>mdi-pause</v-icon>
         </v-btn>
-        <v-btn color="transparent" width="15%">
+        <v-btn color="transparent" width="15%" @click="playNext()">
           <v-icon>mdi-skip-next-circle</v-icon>
         </v-btn>
         <v-slider
