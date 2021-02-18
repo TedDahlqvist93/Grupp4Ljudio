@@ -24,7 +24,7 @@
     </v-app-bar>
 
     <!-- List with playlists  -->
-    <v-navigation-drawer  app width="300" class="">
+    <v-navigation-drawer app width="300" class="">
       <SearchResults/>
     </v-navigation-drawer>
 
@@ -136,6 +136,9 @@ export default {
     },
     pause(){
       this.$store.commit("setIsPlaying", false);
+    },
+    playNext(){
+      this.$store.commit("setCurrentSong", "r5WkkObyH40")
     },
         ...mapActions(["searchSong"]),
         search(query) {

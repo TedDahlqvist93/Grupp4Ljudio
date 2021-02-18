@@ -2,8 +2,9 @@
   <div>
     <h1>Search {{this.$store.state.searchList.search}}</h1>
     <ul>
-      <li @click="setSong(song.videoId)" v-for="song in this.$store.state.searchList.songs" :key="song.browseId">
-        {{ song.name }}-{{ song.artist.name}}
+      <li @click="setSong(song)" v-for="song in this.$store.state.searchList.songs" :key="song.browseId">
+        Name:{{ song.name }} Artist:{{ song.artist.name}}
+        Album: {{ song.album.name}} ID: {{ song.videoId}}
       </li>
     </ul>
   </div>
@@ -23,8 +24,14 @@ export default {
   },
   methods: {
     ...mapGetters(["getSearchList"]),
-    setSong(videoId) {
-      this.$store.commit("setCurrentSong", videoId);
+    setSong(song) {
+      this.$store.commit("setCurrentSong", {
+        id: song.videoId,
+        title: song.name,
+        artist: song.artist.name,
+        album: song.album.name
+      });
+      console.log(this.$store.state.currentSong)
     },
   },
 };

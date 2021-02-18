@@ -3,7 +3,7 @@
     <div>
       <!--  this div will contain the YouTube Player
         when script gets loaded -->
-      <youtube :video-id="videoId" ref="youtube"  resize></youtube>
+      <youtube :video-id="videoId" ref="youtube" :player-vars="playerVars"  resize></youtube>
     </div>
   </v-main>
 </template>
@@ -14,7 +14,12 @@
 export default {
   data() {
     return {
-      videoId: ''
+      videoId: '',
+      playerVars:{
+        autoplay:1,
+        controls:0
+
+      },
     }
   },
   computed: {
@@ -22,7 +27,7 @@ export default {
       return this.$refs.youtube.player
     },
     video() {
-      return this.$store.state.currentSong;
+      return this.$store.state.currentSong.id;
     },
     play() {
       return this.$store.state.player.isPlaying;
