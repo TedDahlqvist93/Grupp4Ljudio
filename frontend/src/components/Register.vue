@@ -142,13 +142,14 @@ button[type="submit"] {
   cursor: pointer;
   border-radius: 30px;
 }
+
 button[type="submit"]:hover {
   background-color: #45a049;
 }
 input {
   margin: 5px;
   box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.06);
-  padding: 10px;
+  padding: 13px;
   border-radius: 30px;
 }
 #error {

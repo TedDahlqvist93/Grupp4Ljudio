@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Search {{this.$store.state.searchList.search}}</h1>
+    <h1>   Search Results{{this.$store.state.searchList.search}}</h1>
     <ul>
       <li @click="setSong(song)" v-for="song in this.$store.state.searchList.songs" :key="song.videoId">
         {{ song.name }}-{{ song.artist.name}}
@@ -58,6 +58,8 @@ button {
   width: 100%;
   height: 70%;
   color: #00cec9;
+  top: -15%;
+  left: 1%;
 }
 #buttons {
   display: flex;

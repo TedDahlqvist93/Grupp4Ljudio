@@ -1,6 +1,6 @@
 <template>
   <v-app id="inspire">
-    <v-app-bar app clipped-center flat height="72">
+    <v-app-bar app clipped-center flat height="72" color="#292b2c">
       <v-spacer></v-spacer>
       <!-- Navbar with searchbar -->
       <v-responsive max-width="400">
@@ -9,8 +9,8 @@
           dense
           flat
           rounded
-          background-color="grey"
-          color="white"
+          background-color="white"
+          color="black"
           
         ></v-text-field>
       </v-responsive>
@@ -37,26 +37,27 @@
     <!-- navbar for mobilescreen -->
 
     <media-display></media-display>
-    <v-footer app color="transparent" height="140" inset>
-      <v-app-bar color="indigo" rounded inset>
-        <v-btn rounded color="white" width="15%" @click="playPrevious()">
+    <v-footer app color="transparent" height="140" width="710" inset>
+      <v-app-bar color="pink" rounded height="59" width="710" inset >
+        <v-btn rounded color="gray" width="15%" @click="playPrevious() ">
           <v-icon>mdi-skip-previous-circle</v-icon>
         </v-btn>
-        <v-btn rounded v-if="!this.$store.state.player.isPlaying" color="white" width="15%" @click="play(true)">
+        <v-btn rounded v-if="!this.$store.state.player.isPlaying" color="gray" width="15%" @click="play(true)">
           <v-icon>mdi-play</v-icon>
         </v-btn>
-        <v-btn rounded v-else color="white" width="15%" @click="play(false)">
+        <v-btn rounded v-else color="gray" width="15%" @click="play(false)">
           <v-icon>mdi-pause</v-icon>
         </v-btn>
-        <v-btn rounded color="white" width="15%" @click="playNext()">
+        <v-btn rounded color="gray" width="15%" @click="playNext()">
           <v-icon>mdi-skip-next-circle</v-icon>
         </v-btn>
         <v-slider
           min="0"
           max="100"
           value="100"
+          color="white"
           thumb-label
-          prepend-icon="mdi-volume-high"
+          append-icon="mdi-volume-high"
           v-model="value"
           @input="changeVolume(value)"
         >
@@ -95,15 +96,15 @@ export default {
     color() {
       switch (this.value) {
         case 0:
-          return "#880E4F";
+          return "pink";
         case 1:
-          return "teal";
+          return "pink";
         case 2:
           return "cyan";
         case 3:
           return "indigo";
         default:
-          return "#880E4F";
+          return "pink";
       }
     },
     ...mapGetters(["getSearchList"]),
