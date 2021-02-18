@@ -1,19 +1,29 @@
 <template>
   <v-main>
-    <div>
-      <h1>Playlist</h1>
-      <ul>
-        <li
-          @click="setSong(song.videoId)"
-          v-for="song in content"
-          :key="song.videoId"
-        >
-          {{ song.name }}
-        </li>
-      </ul>
+    <v-card class="mx-auto" max-width="344" outlined>
+      <v-row align="center" justify="space-around">
+        <div>
+          <h1>Playlist</h1>
+          <ul>
+            <li v-for="song in content" :key="song.videoId">
+              {{ song.name }}
+              <v-btn tile @click="setSong(song.videoId)">
+                <v-icon left>
+                  mdi-pencil
+                </v-icon>
+              </v-btn>
+              <v-btn tile color="success" @click="addSong(song.videoId)">
+                <v-icon left>
+                  mdi-pencil
+                </v-icon>
+              </v-btn>
+            </li>
+          </ul>
 
-      <!--  -->
-    </div>
+          <!--  -->
+        </div>
+      </v-row>
+    </v-card>
   </v-main>
 </template>
 
@@ -27,9 +37,15 @@ export default {
   },
   methods: {
     setSong(videoId) {
-      this.$store.commit("SET_SONG", videoId);
+      this.$store.commit("SetSong", videoId);
+    },
+    addSong(videoId) {
+      this.$store.commit("addSong", videoId);
     },
   },
+  // addSong(videoId) {
+  //   this.$store.commit("AddSong", videoId);
+  // },
 };
 </script>
 <style>

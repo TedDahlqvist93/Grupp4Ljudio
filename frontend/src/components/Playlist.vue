@@ -1,8 +1,11 @@
 <template>
   <v-list class="pl-14" shaped>
-    <v-list-item v-for="n in 5" :key="n" link>
+    <v-list-item    v-for="song in content"
+              :key="song.videoId"
+            >
+            {{ song.name }}
       <v-list-item-content>
-        <v-list-item-title>{{ }}</v-list-item-title>
+        <v-list-item-title>     {{ song.name }} </v-list-item-title>
       </v-list-item-content>
     </v-list-item>
   </v-list>
@@ -13,13 +16,11 @@ import { mapMutations, mapGetters, mapActions } from "vuex";
 
 export default {
     name: "Playlist",
-    computed: {
-        ...mapGetters(["getCurrentPlaylist"])
-
+     computed: {
+  content() {
+      return this.$store.state.currentPLayList;
     },
-    async mounted() {
-        // ...
-    },
+  },
 };
 </script>
 

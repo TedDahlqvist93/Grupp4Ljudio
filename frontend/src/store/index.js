@@ -10,26 +10,11 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    user: {
-      id: null,
-      email: "",
-      loggedIn: false,
-    },
     player: {
       isPlaying: false,
       showVideo: false,
     },
-    currentSong: {
-      id: null,
-      title: "",
-      artist: "",
-      album: "",
-    },
-    currentPlayList: {
-      id: null,
-      name: "",
-      songs: [],
-    },
+
     allPlaylists: {
       playlists: [],
     },
@@ -41,6 +26,7 @@ export default new Vuex.Store({
     content: [],
     results: [],
     currentsong: "",
+    currentPlayList: [],
   },
   getters: {
     getIsPlaying: (state) => {
@@ -66,12 +52,13 @@ export default new Vuex.Store({
     setShowVideo: (state, status) => {
       state.showVideo = status;
     },
-    SET_SONG(state, song) {
+    SetSong(state, song) {
       state.currentsong = song;
     },
 
-    setCurrentPlaylist: (state, status) => {
-      state.currentPlaylist = status;
+    addSong(state, currentPlayList) {
+      state.currentPlayList = currentPlayList;
+      console.log(currentPlayList);
     },
     setAllPlaylists: (state, status) => {
       state.allPlaylists = status;

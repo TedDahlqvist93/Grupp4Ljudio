@@ -11,15 +11,9 @@
           rounded
           solo-inverted
         ></v-text-field>
+        <v-btn mx-auto elevation="2" small @click="getSearchResults(query)">
+        </v-btn>
       </v-responsive>
-      <v-btn
-        rounded
-        small
-        color="primary"
-        dark
-        @click="getSearchResults(query)"
-      >
-      </v-btn>
     </v-app-bar>
 
     <!-- List with playlists  -->
