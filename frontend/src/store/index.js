@@ -66,7 +66,7 @@ export default new Vuex.Store({
             state.user = status;
         },
         setIsPlaying: (state, status) => {
-            state.isPlaying = status;
+            state.player.isPlaying = status;
         },
         setShowVideo: (state, status) => {
             state.showVideo = status;

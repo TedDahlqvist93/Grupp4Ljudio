@@ -14,36 +14,36 @@
 export default {
   data() {
     return {
-      videoId:''
+      videoId: ''
     }
   },
   computed: {
     player() {
       return this.$refs.youtube.player
     },
-    videoId() {
+    video() {
       return this.$store.state.currentSong;
     },
     play() {
-      return this.$store.state.isPlaying;
+      return this.$store.state.player.isPlaying;
     },
     
     pause() {
-    return this.$store.state.isPlaying;
+    return this.$store.state.player.isPlaying;
     }
     
   },
   watch: {
-    videoId(id) {
-      this.player.loadVideoById(id);
+    video(id) {
+      this.videoId = id;
     },
     play() {
-      if(this.$store.state.isPlaying === true){
+      if(this.$store.state.player.isPlaying === true){
         this.$refs.youtube.player.playVideo()
       }
     },
       pause() {
-      if(this.$store.state.isPlaying === false){
+      if(this.$store.state.player.isPlaying === false){
         this.$refs.youtube.player.pauseVideo()
       }
     }
