@@ -1,9 +1,18 @@
 <template>
   <div>
-    <h1>Search {{this.$store.state.searchList.search}}</h1>
+    <v-card
+      ><v-card-title justify-center>{{
+        this.$store.state.searchList.search
+      }}</v-card-title></v-card
+    >
+
     <ul>
-      <li @click="setSong(song)" v-for="song in this.$store.state.searchList.songs" :key="song.videoId">
-        {{ song.name }}-{{ song.artist.name}}
+      <li
+        @click="setSong(song)"
+        v-for="song in this.$store.state.searchList.songs"
+        :key="song.videoId"
+      >
+        {{ song.name }}-{{ song.artist.name }}
       </li>
     </ul>
   </div>
@@ -17,10 +26,9 @@ export default {
   data() {
     return {
       result: this.$store.state.searchList,
-    }
+    };
   },
-  computed: {
-  },
+  computed: {},
   methods: {
     ...mapGetters(["getSearchList"]),
     setSong(song) {
@@ -28,10 +36,9 @@ export default {
         id: song.videoId,
         title: song.name,
         artist: song.artist.name,
-        album: song.album.name
-      })
+        album: song.album.name,
+      });
       this.$store.commit("setIsPlaying", true);
-      ;
     },
   },
 };

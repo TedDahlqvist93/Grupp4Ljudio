@@ -8,7 +8,12 @@
         </div>
         <div>
           <label for="password">Password</label>
-          <input type="text" name="password" v-model="loginForm.password" required />
+          <input
+            type="text"
+            name="password"
+            v-model="loginForm.password"
+            required
+          />
         </div>
         <button type="submit" @click="submitLogin">Login</button>
         <button v-on:click="showLoginForm">Close</button>
@@ -16,33 +21,56 @@
       <form @submit.prevent="this.registerForm" v-if="this.registerModal">
         <div>
           <label for="email">First Name</label>
-          <input type="text" name="email" v-model="registerForm.firstName" required />
+          <input
+            type="text"
+            name="email"
+            v-model="registerForm.firstName"
+            required
+          />
         </div>
         <div>
           <label for="email">Last Name</label>
-          <input type="text" name="email" v-model="registerForm.lastName" required />
+          <input
+            type="text"
+            name="email"
+            v-model="registerForm.lastName"
+            required
+          />
         </div>
         <div>
           <label for="email">E-mail</label>
-          <input type="text" name="email" v-model="registerForm.email" required />
+          <input
+            type="text"
+            name="email"
+            v-model="registerForm.email"
+            required
+          />
         </div>
         <div>
           <label for="password">Password</label>
-          <input type="text" name="password" v-model="registerForm.password" required />
+          <input
+            type="text"
+            name="password"
+            v-model="registerForm.password"
+            required
+          />
         </div>
         <button type="submit" @click="submitRegister">Register</button>
         <button v-on:click="showRegisterForm">Close</button>
       </form>
-        <div v-if="!user.loggedIn && !loginModal && !registerModal">
-            <button @click="showRegisterForm">Register</button>
-            <button @click="showLoginForm">Login</button>
+
+      <div v-if="!user.loggedIn && !loginModal && !registerModal">
+        <v-btn rounded @click="showRegisterForm">Register</v-btn>
+        <br /><br />
+        <v-btn rounded @click="showLoginForm">Login</v-btn>
+      </div>
+
+      <div v-if="user.loggedIn">
+        <div v-for="(value, name) in user" v-bind:key="name">
+          {{ name }}: {{ value }}
         </div>
-        <div v-if="user.loggedIn">
-            <div v-for="(value, name) in user" v-bind:key="name">
-              {{ name }}: {{ value }}
-            </div>
-            <button v-on:click="logOut">Logout</button>
-        </div>
+        <button v-on:click="logOut">Logout</button>
+      </div>
     </div>
   </div>
 </template>
@@ -58,8 +86,8 @@ export default {
       registerModal: false,
       loginModal: false,
       loginForm: {
-          email: "",
-          password: "",
+        email: "",
+        password: "",
       },
       registerForm: {
         email: "",
@@ -71,59 +99,57 @@ export default {
   },
   methods: {
     ...mapActions(["register"]),
-    ...mapActions(['logout']),
-    ...mapActions(['login']),
+    ...mapActions(["logout"]),
+    ...mapActions(["login"]),
     ...mapGetters(["getUser"]),
 
     async submitRegister(e) {
-        await this.register(this.registerForm)
-        .then(response => {
-            this.user = this.getUser();
-            if (this.user.loggedIn) {
-              console.log("email in use")
-              this.registerForm = {};
-              this.registerModal = false;
-              this.loginModal = false;
-            }
+      await this.register(this.registerForm)
+        .then((response) => {
+          this.user = this.getUser();
+          if (this.user.loggedIn) {
+            console.log("email in use");
+            this.registerForm = {};
+            this.registerModal = false;
+            this.loginModal = false;
+          }
         })
         .catch((error) => {
-            console.log("err", error);
-        })
-
+          console.log("err", error);
+        });
     },
     async showRegisterForm() {
-        this.registerModal = !this.registerModal;
-        await this.$nextTick();
+      this.registerModal = !this.registerModal;
+      await this.$nextTick();
     },
     async showLoginForm() {
-        this.loginModal = !this.loginModal;
-        await this.$nextTick();
+      this.loginModal = !this.loginModal;
+      await this.$nextTick();
     },
     async logOut() {
-        await this.logout(this.user)
-        .then(response => {
-            this.registerModal = false;
-            this.loginModal = false;
-            this.user = this.getUser();
+      await this.logout(this.user)
+        .then((response) => {
+          this.registerModal = false;
+          this.loginModal = false;
+          this.user = this.getUser();
         })
         .catch((error) => {
-            console.log(error);
-        })
+          console.log(error);
+        });
     },
     async submitLogin(e) {
-        console.log("submit")
-        await this.login(this.loginForm)
-        .then(response => {
-            console.log("then")
-            this.registerModal = false;
-            this.loginModal = false;
-            this.user = this.getUser();
+      console.log("submit");
+      await this.login(this.loginForm)
+        .then((response) => {
+          console.log("then");
+          this.registerModal = false;
+          this.loginModal = false;
+          this.user = this.getUser();
         })
         .catch((error) => {
-            console.log(error);
-        })
-    }
-
+          console.log(error);
+        });
+    },
   },
 };
 </script>

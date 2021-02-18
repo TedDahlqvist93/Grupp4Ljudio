@@ -11,7 +11,6 @@
           rounded
           background-color="grey"
           color="white"
-          
         ></v-text-field>
       </v-responsive>
       <v-btn
@@ -21,28 +20,37 @@
         dark
         @click="search(query)"
         max-width="120"
-      >Search
+        >Search
       </v-btn>
     </v-app-bar>
 
     <!-- List with playlists  -->
     <v-navigation-drawer app width="300" class="">
-      <SearchResults/>
+      <SearchResults />
     </v-navigation-drawer>
 
     <!-- List with songs -->
     <v-navigation-drawer app clipped right>
-        <Register/>
+      <Register />
     </v-navigation-drawer>
     <!-- navbar for mobilescreen -->
 
     <media-display></media-display>
+    <v-main>
+      <v-card>
+        <span><SearchResults /></span></v-card
+    ></v-main>
     <v-footer app color="transparent" height="140" inset>
       <v-app-bar color="#FC3468" rounded inset>
         <v-btn color="white" width="15%" @click="playPrevious()">
           <v-icon>mdi-skip-previous-circle</v-icon>
         </v-btn>
-        <v-btn v-if="!this.$store.state.player.isPlaying" color="white" width="15%" @click="play(true)">
+        <v-btn
+          v-if="!this.$store.state.player.isPlaying"
+          color="white"
+          width="15%"
+          @click="play(true)"
+        >
           <v-icon>mdi-play</v-icon>
         </v-btn>
         <v-btn v-else color="white" width="15%" @click="play(false)">
@@ -107,13 +115,12 @@ export default {
   },
   methods: {
     ...mapActions(["searchSong"]),
-    play(bool){
-        this.$store.commit("setIsPlaying", bool)
-      
+    play(bool) {
+      this.$store.commit("setIsPlaying", bool);
     },
     search(query) {
-      this.searchSong(query)
-    }
+      this.searchSong(query);
+    },
   },
 };
 </script>
