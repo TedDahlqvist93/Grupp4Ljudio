@@ -30,7 +30,7 @@ export default {
     window.YT.ready(function (){
       this.player = new YT.Player("yt-player", {
       host: "https://www.youtube.com",
-      height: "300",
+      height: "400",
       width: "400",
       playerVars: {
         autoplay: 1,
