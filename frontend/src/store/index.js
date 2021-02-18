@@ -1,11 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import axios from "axios";
 
-import User from '../api/User.js'
-import Song from '../api/Songs.js'
-import Playlist from '../api/Playlists.js'
-import Youtube from '../api/Youtube.js'
+import axios from 'axios'
 
 Vue.use(Vuex)
 
@@ -90,36 +86,26 @@ export default new Vuex.Store({
     },
     actions: {
         async searchSong({ commit }, query) {
-            await Youtube.searchSong(query)
+            await axios.get(`http://localhost:3000/api/yt/songs/${query}`)
                 .then(response => {
-                  commit("setSearchList", {search: query, songs: response.data.content});
-                  return response
-                })
-                .catch(error => {
-                  console.log(error);
+                   commit('setSearchList', { search: query, songs: response.data.content})
+                   console.log(response) 
                 })
         },
-        async getUser(data) {
-            await User.getStatus(data)
-                .then(response => {
-                    console.log(response)
-                    return response
-                })
-                .catch(error => {
-                    console.log(error);
-                })
+        async getUser({commit}, data) {
+            await axios.get('http://localhost:3000/api/login', data)
+                .then((response) => {
+                    commit('setUser', response.data)
+            })
         },
         async login({commit}, data) {
-            await User.login(data)
+            await axios.post('http://localhost:3000/api/login', data)
                 .then(response => {
                     commit('setUser', response.data)
                 })
-                .catch(error => {
-                    console.log(error);
-                })
         },
         async register({commit}, data) {
-            await User.register(data)
+            await axios.post('http://localhost:3000/api/users', data)
                 .then(response => {
                     commit('setUser', response.data)
                 })
@@ -128,7 +114,7 @@ export default new Vuex.Store({
                 })
         },
         async logout({commit}, data) {
-            await User.logout(data)
+            await axios.delete('http://localhost:3000/api/login', data)
                 .then(response => {
                     commit('setUser', {
                         id: '',
@@ -138,9 +124,6 @@ export default new Vuex.Store({
                         loggedIn: false,
                     })
                     return response
-                })
-                .catch(error => {
-                    console.log(error);
                 })
         },
 
@@ -154,48 +137,33 @@ export default new Vuex.Store({
                 })
         },
         async addPlaylist(data) {
-            await Playlist.add(data)
+            await axios.post('http://localhost:3000/api/playlists', data)
                 .then(response => {
                     console.log(response);
-                })
-                .catch(error => {
-                    console.log(error);
                 })
         },
         async deletePlaylist(data) {
-            await Playlist.remove(data)
+            await axios.delete('http://localhost:3000/playlists', data)
                 .then(response => {
                     console.log(response);
-                })
-                .catch(error => {
-                    console.log(error);
                 })
         },
         async getSongs(data) {
-            await Song.get(data)
+            await axios.get('http://localhost:3000/api/songs', data)
                 .then(response => {
                     console.log(response);
-                })
-                .catch(error => {
-                    console.log(error);
                 })
         },
         async addSong(data) {
-            await Song.add(data)
+            await axios.post('http://localhost:3000/api/songs', data)
                 .then(response => {
                     console.log(response);
-                })
-                .catch(error => {
-                    console.log(error);
                 })
         },
         async deleteSong(data) {
-            await Song.remove(data)
+            await axios.delete('http://localhost:3000/songs', data)
                 .then(response => {
                     console.log(response);
-                })
-                .catch(error => {
-                    console.log(error);
                 })
         }
     },

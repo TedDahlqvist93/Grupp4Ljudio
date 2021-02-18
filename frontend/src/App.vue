@@ -17,25 +17,16 @@
         small
         color="primary"
         dark
-        @click="searchSong(query)"
+        @click="search(query)"
         max-width="120"
       >
       </v-btn>
     </v-app-bar>
 
     <!-- List with playlists  -->
-    <v-navigation-drawer app width="250" class="">
-      <v-sheet height="128" width="100%"></v-sheet>
-
-      <v-list class="pl-2" shaped>
-        <v-list-item v-for="n in 5" :key="n" link>
-          <v-list-item-content>
-            <v-list-item-title>Item {{ n }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
+    <v-navigation-drawer v-model="drawer" app width="300" class="">
+      <SearchResults/>
     </v-navigation-drawer>
-    {{ text }}
 
     <!-- List with songs -->
     <v-navigation-drawer app clipped right>
@@ -137,16 +128,19 @@ export default {
           return "#880E4F";
       }
     },
-    ...mapGetters(["searchResult"]),
+    ...mapGetters(["getSearchList"]),
   },
   methods: {
-    ...mapActions(["searchSong"]),
     play(){
       this.$store.commit("setIsPlaying", true);
     },
     pause(){
       this.$store.commit("setIsPlaying", false);
-    }
+    },
+        ...mapActions(["searchSong"]),
+        search(query) {
+          this.searchSong(query)
+        }
   },
 };
 </script>

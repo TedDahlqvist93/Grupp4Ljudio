@@ -1,33 +1,30 @@
 <template>
-  <v-main>
-    <div>
-      <h1>Playlist</h1>
-      <ul>
-        <li
-          @click="setSong(song.videoId)"
-          v-for="song in content"
-          :key="song.videoId"
-        >
-          {{ song.name }}
-        </li>
-      </ul>
-
-      <!--  -->
-    </div>
-  </v-main>
+  <div>
+    <h1>Search {{this.$store.state.searchList.search}}</h1>
+    <ul>
+      <li @click="setSong(song.videoId)" v-for="song in this.$store.state.searchList.songs" :key="song.browseId">
+        {{ song.name }}-{{ song.artist.name}}
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
+
 export default {
   name: "SearchResults",
+  data() {
+    return {
+      result: this.$store.state.searchList,
+    }
+  },
   computed: {
-    content() {
-      return this.$store.state.results;
-    },
   },
   methods: {
+    ...mapGetters(["getSearchList"]),
     setSong(videoId) {
-      this.$store.commit("SET_SONG", videoId);
+      this.$store.commit("setCurrentSong", videoId);
     },
   },
 };
