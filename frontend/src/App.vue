@@ -57,7 +57,8 @@
           value="100"
           thumb-label
           prepend-icon="mdi-volume-high"
-          @drag="changeVolume()"
+          v-model="value"
+          @input="changeVolume(value)"
         >
         </v-slider>
       </v-app-bar>
@@ -86,6 +87,8 @@ export default {
       value: 1,
       text: "",
       query: "",
+      value: "100"
+    
     };
   },
   computed: {
@@ -104,12 +107,17 @@ export default {
       }
     },
     ...mapGetters(["getSearchList"]),
+
+
   },
   methods: {
     ...mapActions(["searchSong"]),
     play(bool){
         this.$store.commit("setIsPlaying", bool)
       
+    },
+    changeVolume(volume){
+        this.$store.commit("setVolume", volume)
     },
     search(query) {
       this.searchSong(query)

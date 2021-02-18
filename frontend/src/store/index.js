@@ -17,6 +17,7 @@ export default new Vuex.Store({
         player: {
             isPlaying: false,
             showVideo: false,
+            volume: 100,
         },
         currentSong: {
             id: null,
@@ -67,6 +68,9 @@ export default new Vuex.Store({
         },
         setIsPlaying: (state, status) => {
             state.player.isPlaying = status;
+        },
+        setVolume: (state, status) => {
+            state.player.volume = status;
         },
         setShowVideo: (state, status) => {
             state.showVideo = status;

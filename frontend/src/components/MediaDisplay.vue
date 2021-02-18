@@ -32,6 +32,9 @@ export default {
     
     pause() {
     return this.$store.state.player.isPlaying;
+    },
+    volume(){
+      return this.$store.state.player.volume;
     }
     
   },
@@ -49,6 +52,9 @@ export default {
         this.$refs.youtube.player.pauseVideo();
         
       }
+    },
+    volume(volume){
+    this.$refs.youtube.player.setVolume(volume);   
     }
   },
   methods: {
