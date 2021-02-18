@@ -66,7 +66,6 @@ export default new Vuex.Store({
     },
     mutations: {
         setUser: (state, status) => {
-            console.log(status)
             state.user = status;
         },
         setIsPlaying: (state, status) => {
