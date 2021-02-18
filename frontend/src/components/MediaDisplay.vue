@@ -17,7 +17,7 @@ export default {
   },
   computed: {
     videoId() {
-      return this.$store.state.currentsong;
+      return this.$store.state.currentSong;
     },
   },
   watch: {

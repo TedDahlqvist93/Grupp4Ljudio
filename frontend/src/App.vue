@@ -17,7 +17,7 @@
         small
         color="primary"
         dark
-        @click="getSearchResults(query)"
+        @click="searchSong(query)"
       >
       </v-btn>
     </v-app-bar>
@@ -138,7 +138,7 @@ export default {
     ...mapGetters(["searchResult"]),
   },
   methods: {
-    ...mapActions(["getSearchResults"]),
+    ...mapActions(["searchSong"]),
   },
 };
 </script>

@@ -2,9 +2,8 @@ import axios from 'axios'
 
 export default {
     async searchSong(query) {
-        return await (await axios.get(`/api/yt/songs/${query}`))
+        return await axios.get(`http://localhost:3000/api/yt/songs/${query}`)
             .then((response) => {
-                console.log(response)
                 return response
             })
             .catch((error) => {

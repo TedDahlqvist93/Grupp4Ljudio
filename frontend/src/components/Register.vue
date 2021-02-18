@@ -38,7 +38,7 @@
             <button v-on:click="showLoginForm">Login</button>
         </div>
         <div v-if="this.user.loggedIn">
-            <div v-for="(value, name) in this.user">
+            <div v-for="(value, name) in this.user" v-bind:key=name>
               {{ name }}: {{ value }}
             </div>
             <button v-on:click="logOut">Logout</button>
@@ -54,7 +54,7 @@ export default {
   components: {},
   data() {
     return {
-      user: this.getUser(),
+      user: this.$store.state.user,
       registerModal: false,
       loginModal: false,
       loginForm: {

@@ -59,6 +59,9 @@ export default new Vuex.Store({
         },
         getAllPlaylists: state => {
             return state.currentPlaylist;
+        },
+        getSearchList: state => {
+          return state.searchList;
         }
     },
     mutations: {
@@ -89,7 +92,7 @@ export default new Vuex.Store({
         async searchSong({ commit }, query) {
             await Youtube.searchSong(query)
                 .then(response => {
-                  commit("setSearchList", {search: query, songs: res.data.content});
+                  commit("setSearchList", {search: query, songs: response.data.content});
                   return response
                 })
                 .catch(error => {
@@ -196,5 +199,4 @@ export default new Vuex.Store({
                 })
         }
     },
-  },
 });
