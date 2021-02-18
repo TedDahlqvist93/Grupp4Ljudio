@@ -72,24 +72,6 @@ VALUES
 /*!40000 ALTER TABLE `examples` ENABLE KEYS */;
 UNLOCK TABLES;
 
-
-# Dump of table examples_with_colors
-# ------------------------------------------------------------
-
-DROP VIEW IF EXISTS `examples_with_colors`;
-
-CREATE TABLE `examples_with_colors` (
-   `id` INT(11) UNSIGNED NOT NULL DEFAULT '0',
-   `name` VARCHAR(255) NOT NULL DEFAULT '',
-   `slogan` VARCHAR(255) NULL DEFAULT NULL,
-   `created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
-   `updated` DATETIME NULL DEFAULT NULL,
-   `color` INT(11) UNSIGNED NULL DEFAULT NULL,
-   `value` VARCHAR(255) NULL DEFAULT ''
-) ENGINE=MyISAM;
-
-
-
 # Dump of table users
 # ------------------------------------------------------------
 
@@ -114,6 +96,55 @@ VALUES
 	(2,'ben@node.se','$2b$10$9HqnbybYby9JQI1o0srtMe4p4ip4PtEhVoUlNNpbKcgTZvufWpOEG','Ben','Node');
 
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# Dump of table playlists
+# ------------------------------------------------------------
+DROP TABLE IF EXISTS `playlists`;
+
+CREATE TABLE `playlists` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES `playlists` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+
+INSERT INTO `playlists` (`user_id`, `name`)
+VALUES
+    (1,'test_playlist'),
+    (1,'test_playlist'),
+
+/*!40000 ALTER TABLE `playlists` ENABLE KEYS */;
+UNLOCK TABLES;
+
+# Dump of table songs
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `songs`;
+
+CREATE TABLE `songs` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT;
+  `key` varchar(255) DEFAULT NULL,
+  `user_id` int(11) unsigned NOT NULL,
+  `title` varchar(255) DEFAULT NULL   ,
+  `artist` varchar(255) DEFAULT NULL,
+  `album` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES `songs` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+
+INSERT INTO `songs` (`user_id`, `id`, `title`, `artist`, `album`)
+VALUES
+	(1,'xcdTeSt9','test_title', 'test_artist', 'test_album'),
+	(2,'xcdTeSt7','test_title', 'test_artist', 'test_album'),
+
+/*!40000 ALTER TABLE `songs` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
