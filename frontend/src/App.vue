@@ -23,10 +23,10 @@
     </v-app-bar>
 
     <!-- List with playlists  -->
-    <v-navigation-drawer app width="300" class="">
+    <v-navigation-drawer app width="250" class="">
       <v-sheet height="128" width="100%"></v-sheet>
 
-      <v-list class="pl-14" shaped>
+      <v-list class="pl-2" shaped>
         <v-list-item v-for="n in 5" :key="n" link>
           <v-list-item-content>
             <v-list-item-title>Item {{ n }}</v-list-item-title>
