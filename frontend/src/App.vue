@@ -40,10 +40,10 @@
         <v-btn color="white" width="15%" @click="playPrevious()">
           <v-icon>mdi-skip-previous-circle</v-icon>
         </v-btn>
-        <v-btn color="white" width="15%" @click="play()">
+        <v-btn v-if="!this.$store.state.isPlaying" color="white" width="15%" @click="play()">
           <v-icon>mdi-play</v-icon>
         </v-btn>
-        <v-btn color="white" width="15%" @click="pause()">
+        <v-btn v-else color="white" width="15%" @click="pause()">
           <v-icon>mdi-pause</v-icon>
         </v-btn>
         <v-btn color="white" width="15%" @click="playNext()">
@@ -56,37 +56,10 @@
           thumb-label
           prepend-icon="mdi-volume-high"
           @drag="changeVolume()"
-        ></v-slider>
+        >
+        </v-slider>
       </v-app-bar>
-      <v-bottom-navigation v-model="value" :background-color="color" dark shift>
-        <v-btn>
-          <span>
-            <router-link to="/results">SearchResults</router-link>
-          </span>
-
-          <v-icon>mdi-television-play</v-icon>
-        </v-btn>
-
-        <v-btn>
-          <span> <router-link to="/media">Media</router-link></span>
-
-          <v-icon>mdi-music-note</v-icon>
-        </v-btn>
-
-        <v-btn>
-          <span> <router-link to="/play">PlayList</router-link></span>
-
-          <v-icon>mdi-album</v-icon>
-        </v-btn>
-
-        <v-btn>
-          <span>Playlist</span>
-
-          <v-icon>mdi-playlist-music</v-icon>
-        </v-btn>
-      </v-bottom-navigation>
     </v-footer>
-    <router-view></router-view>
   </v-app>
 </template>
 
@@ -131,19 +104,16 @@ export default {
     ...mapGetters(["getSearchList"]),
   },
   methods: {
+    ...mapActions(["searchSong"]),
     play(){
       this.$store.commit("setIsPlaying", true);
     },
     pause(){
       this.$store.commit("setIsPlaying", false);
     },
-    playNext(){
-      this.$store.commit("setCurrentSong", "r5WkkObyH40")
-    },
-        ...mapActions(["searchSong"]),
-        search(query) {
-          this.searchSong(query)
-        }
+    search(query) {
+      this.searchSong(query)
+    }
   },
 };
 </script>

@@ -2,9 +2,8 @@
   <div>
     <h1>Search {{this.$store.state.searchList.search}}</h1>
     <ul>
-      <li @click="setSong(song)" v-for="song in this.$store.state.searchList.songs" :key="song.browseId">
-        Name:{{ song.name }} Artist:{{ song.artist.name}}
-        Album: {{ song.album.name}} ID: {{ song.videoId}}
+      <li @click="setSong(song)" v-for="song in this.$store.state.searchList.songs" :key="song.videoId">
+        {{ song.name }}-{{ song.artist.name}}
       </li>
     </ul>
   </div>
@@ -31,7 +30,6 @@ export default {
         artist: song.artist.name,
         album: song.album.name
       });
-      console.log(this.$store.state.currentSong)
     },
   },
 };
