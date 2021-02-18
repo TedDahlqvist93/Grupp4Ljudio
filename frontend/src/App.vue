@@ -1,9 +1,9 @@
 <template>
   <v-app id="inspire">
-    <v-app-bar app clipped-left flat height="72">
+    <v-app-bar app clipped-center flat height="72">
       <v-spacer></v-spacer>
       <!-- Navbar with searchbar -->
-      <v-responsive max-width="156">
+      <v-responsive max-width="400">
         <v-text-field
           v-model="query"
           dense
@@ -18,6 +18,7 @@
         color="primary"
         dark
         @click="searchSong(query)"
+        max-width="120"
       >
       </v-btn>
     </v-app-bar>
