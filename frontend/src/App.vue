@@ -39,16 +39,16 @@
     <media-display></media-display>
     <v-footer app color="transparent" height="140" inset>
       <v-app-bar color="indigo" rounded inset>
-        <v-btn color="white" width="15%" @click="playPrevious()">
+        <v-btn rounded color="white" width="15%" @click="playPrevious()">
           <v-icon>mdi-skip-previous-circle</v-icon>
         </v-btn>
-        <v-btn v-if="!this.$store.state.player.isPlaying" color="white" width="15%" @click="play(true)">
+        <v-btn rounded v-if="!this.$store.state.player.isPlaying" color="white" width="15%" @click="play(true)">
           <v-icon>mdi-play</v-icon>
         </v-btn>
-        <v-btn v-else color="white" width="15%" @click="play(false)">
+        <v-btn rounded v-else color="white" width="15%" @click="play(false)">
           <v-icon>mdi-pause</v-icon>
         </v-btn>
-        <v-btn color="white" width="15%" @click="playNext()">
+        <v-btn rounded color="white" width="15%" @click="playNext()">
           <v-icon>mdi-skip-next-circle</v-icon>
         </v-btn>
         <v-slider
