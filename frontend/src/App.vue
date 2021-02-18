@@ -64,6 +64,7 @@
           value="100"
           thumb-label
           prepend-icon="mdi-volume-high"
+          @drag="changeVolume()"
         ></v-slider>
       </v-app-bar>
       <v-bottom-navigation v-model="value" :background-color="color" dark shift>
