@@ -9,7 +9,9 @@
           dense
           flat
           rounded
-          solo-inverted
+          background-color="grey"
+          color="white"
+          
         ></v-text-field>
       </v-responsive>
       <v-btn
@@ -19,7 +21,7 @@
         dark
         @click="search(query)"
         max-width="120"
-      >
+      >Search
       </v-btn>
     </v-app-bar>
 
@@ -36,7 +38,7 @@
 
     <media-display></media-display>
     <v-footer app color="transparent" height="140" inset>
-      <v-app-bar color="green" inset>
+      <v-app-bar color="#FC3468" rounded inset>
         <v-btn color="white" width="15%" @click="playPrevious()">
           <v-icon>mdi-skip-previous-circle</v-icon>
         </v-btn>

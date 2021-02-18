@@ -46,7 +46,8 @@ export default {
     },
       pause() {
       if(this.$store.state.player.isPlaying === false){
-        this.$refs.youtube.player.pauseVideo()
+        this.$refs.youtube.player.pauseVideo();
+        
       }
     }
   },
@@ -55,5 +56,3 @@ export default {
   }
 }
 </script>
-
-dQw4w9WgXcQ
