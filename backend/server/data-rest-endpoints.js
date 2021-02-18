@@ -1,16 +1,26 @@
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcrypt")
 
 module.exports = (app, db) => {
-    // Authentication routes
 
     // register user
     app.post("/api/users", async (request, response) => {
         let password = await bcrypt.hash(request.body.password, 10);
-        let result = await db.query("INSERT INTO users SET ?", {
-            ...request.body,
-            password,
-        });
-        response.json(result);
+        let firstName = request.body.firstName
+        let lastName = request.body.lastName
+        let email = request.body.email
+
+        await db.query(`INSERT INTO users SET email = ?, password = ?, first_name = ?, last_name = ? `,
+            [email, password, firstName, lastName])
+            .catch(error => {
+                console.log(error)
+                response.status(400)
+                response.json({error: "database error"})
+            })
+
+
+
+        response.json({firstName, lastName, email, loggedIn: true})
+
     });
 
     // authentication: perform login
@@ -27,7 +37,8 @@ module.exports = (app, db) => {
         ) {
             request.session.user = user;
             user.loggedIn = true;
-            response.json({loggedIn: true});
+            delete user.password;
+            response.json(user);
         } else {
             response.status(401); // unauthorized  https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
             response.json({message: "no matching user"});
@@ -56,21 +67,14 @@ module.exports = (app, db) => {
 
     // logga ut
     app.delete("/api/login", async (request, response) => {
+        console.log(request.data)
         request.session.destroy(() => {
             response.json({loggedIn: false});
         });
     });
 
-    /* TABLE: Playlists
-     * id: int
-     * user_id: string
-     * name: string
-     */
-
-    // Endpoint: Get Playlist
-    // Param: playlist id (id)
-    // Body: user_id
-    app.get('/api/playlists/:id', async (request, response) => {
+    // get playlist
+    app.get('/api/playlists/', async (request, response) => {
         if (!request.session.user) {
             response.status(403) // forbidden
             response.json({error: 'not logged in'})
@@ -85,10 +89,8 @@ module.exports = (app, db) => {
     })
 
 
-    // Endpoint: Add Playlist
-    // Param: playlist id (id)
-    // Body: user_id, name
-    app.post('/api/playlists/:id', async (request, response) => {
+    // add playlist
+    app.post('/api/playlists/', async (request, response) => {
         if (!request.session.user) {
             response.status(403) // forbidden
             response.json({error: 'not logged in'})
@@ -102,10 +104,8 @@ module.exports = (app, db) => {
         response.json(result);
     })
 
-    // Endpoint: Delete Playlist
-    // Param: playlist id (id)
-    // Body: user_id
-    app.delete("/api/playlists/:id", async (request, response) => {
+    // delete playlist
+    app.delete("/api/playlists/", async (request, response) => {
         if (!request.session.user) {
             response.status(403) // forbidden
             response.json({error: 'not logged in'})
@@ -118,17 +118,8 @@ module.exports = (app, db) => {
         response.json(result)
     })
 
-    /* TABLE: Songs
-     * id: int
-     * song_id: string
-     * title: string
-     * artist: string
-     * album: string
-     */
-
-    // Endpoint: Get Song
-    // Param: playlist id (id)
-    app.get('/api/songs/:id', async (request, response) => {
+    // get songs
+    app.get('/api/songs/', async (request, response) => {
         if (!request.session.user) {
             response.status(403) // forbidden
             response.json({error: 'not logged in'})
@@ -141,11 +132,8 @@ module.exports = (app, db) => {
         response.json(result);
     })
 
-
-    // Endpoint: Add Song
-    // Param: playlist id (id)
-    // Body: song_id, name, artist, album
-    app.post('/api/songs/:id', async (request, response) => {
+    // add song
+    app.post('/api/songs/', async (request, response) => {
         if (!request.session.user) {
             response.status(403) // forbidden
             response.json({error: 'not logged in'})
@@ -160,10 +148,8 @@ module.exports = (app, db) => {
         response.json(result);
     })
 
-    // Endpoint: Delete Song
-    // Param: playlist id (id)
-    // Body: song_id
-    app.delete("/api/songs/:id", async (request, response) => {
+    // delete song
+    app.delete("/api/songs/", async (request, response) => {
         if (!request.session.user) {
             response.status(403) // forbidden
             response.json({error: 'not logged in'})
@@ -172,69 +158,7 @@ module.exports = (app, db) => {
         let result = await db.query(`
             DELETE FROM songs
             WHERE id = ? AND song_id = ?`,
-            request.params.id, request.body.song_id)
+            request.body.id, request.body.song_id)
         response.json(result)
     })
-
-    // public get all table rows
-    app.get("/api/examples", async (request, response) => {
-        let data = await db.query("SELECT * FROM examples");
-        response.json(data);
-    });
-
-    // public get one table row
-    app.get("/api/examples/:id", async (request, response) => {
-        let data = await db.query("SELECT * FROM examples WHERE id = ?", [
-            request.params.id,
-        ]);
-        data = data[0]; // single row
-        response.json(data);
-    });
-
-    // public get another table (happens to be a left joined view)
-    app.get("/api/examples_with_colors", async (request, response) => {
-        let data = await db.query("SELECT * FROM examples_with_colors");
-        response.json(data);
-    });
-
-    // private create one row
-    app.post("/api/examples", async (request, response) => {
-        // check if user exists before writing
-        if (!request.session.user) {
-            response.status(403); // forbidden
-            response.json({error: "not logged in"});
-            return;
-        }
-        let result = await db.query("INSERT INTO examples SET ?", request.body);
-        response.json(result);
-    });
-
-    // private update one row
-    app.put("/api/examples/:id", async (request, response) => {
-        // check if user exists before writing
-        if (!request.session.user) {
-            response.status(403); // forbidden
-            response.json({error: "not logged in"});
-            return;
-        }
-        let result = await db.query("UPDATE examples SET ? WHERE id = ?", [
-            request.body,
-            request.params.id,
-        ]);
-        response.json(result);
-    });
-
-    // private delete one row
-    app.delete("/api/examples/:id", async (request, response) => {
-        // check if user exists before writing
-        if (!request.session.user) {
-            response.status(403); // forbidden
-            response.json({error: "not logged in"});
-            return;
-        }
-        let result = await db.query(
-            "DELETE FROM examples WHERE id = ?",
-            request.params.id
-        );
-        response.json(result);
-    });
+}

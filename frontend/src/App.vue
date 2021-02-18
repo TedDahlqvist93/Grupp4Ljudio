@@ -38,17 +38,8 @@
 
     <!-- List with songs -->
     <v-navigation-drawer app clipped right>
-      <v-list>
-        <v-list-item v-for="n in 5" :key="n" link>
-          <v-list-item-content>
-            <v-list-item-title>Item {{ n }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
+        <Register/>
     </v-navigation-drawer>
-
-    <v-main> </v-main>
-
     <!-- navbar for mobilescreen -->
 
     <media-display></media-display>
@@ -109,9 +100,10 @@
 <script>
 import SearchResults from "./components/SearchResults.vue";
 import Playlist from "./components/Playlist.vue";
-import store from "./store/index";
 import { mapActions, mapGetters } from "vuex";
 import MediaDisplay from "./components/MediaDisplay.vue";
+import Register from "./components/Register.vue";
+
 export default {
   name: "App",
   components: {
@@ -119,6 +111,7 @@ export default {
     SearchResults,
     Playlist,
     MediaDisplay,
+    Register,
   },
   data() {
     return {
