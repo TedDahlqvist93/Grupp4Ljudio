@@ -1,9 +1,9 @@
 <template>
   <v-app id="inspire">
-    <v-app-bar app clipped-left flat height="72">
+    <v-app-bar app clipped-center flat height="72">
       <v-spacer></v-spacer>
       <!-- Navbar with searchbar -->
-      <v-responsive max-width="156">
+      <v-responsive max-width="400">
         <v-text-field
           v-model="query"
           dense
@@ -18,6 +18,7 @@
         color="primary"
         dark
         @click="search(query)"
+        max-width="120"
       >
       </v-btn>
     </v-app-bar>
@@ -36,16 +37,16 @@
     <media-display></media-display>
     <v-footer app color="transparent" height="140" inset>
       <v-app-bar inset>
-        <v-btn color="transparent" width="15%">
+        <v-btn color="transparent" width="15%" @click="playPrevious()">
           <v-icon>mdi-skip-previous-circle</v-icon>
         </v-btn>
-        <v-btn color="transparent" width="15%">
+        <v-btn color="transparent" width="15%" @click="play()">
           <v-icon>mdi-play</v-icon>
         </v-btn>
-        <v-btn color="transparent" width="15%">
+        <v-btn color="transparent" width="15%" @click="pause()">
           <v-icon>mdi-pause</v-icon>
         </v-btn>
-        <v-btn color="transparent" width="15%">
+        <v-btn color="transparent" width="15%" @click="playNext()">
           <v-icon>mdi-skip-next-circle</v-icon>
         </v-btn>
         <v-slider
@@ -54,6 +55,7 @@
           value="100"
           thumb-label
           prepend-icon="mdi-volume-high"
+          @drag="changeVolume()"
         ></v-slider>
       </v-app-bar>
       <v-bottom-navigation v-model="value" :background-color="color" dark shift>
