@@ -5,6 +5,13 @@ const port = 3000;
 const express = require("express");
 const app = express();
 
+const cors = require("cors");
+app.use(cors({
+    'allowedHeaders': ['Content-Type'],
+    'origin': '*',
+    'preflightContinue': true
+}));
+
 // add body-parser to express
 const bodyParser = require("body-parser");
 // register as middleware
