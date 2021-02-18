@@ -16,7 +16,6 @@ export default {
       playerVars:{
         autoplay:1,
         controls:0
-
       },
     }
   },
