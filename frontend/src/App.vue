@@ -56,37 +56,10 @@
           thumb-label
           prepend-icon="mdi-volume-high"
           @drag="changeVolume()"
-        ></v-slider>
+        >
+        </v-slider>
       </v-app-bar>
-      <v-bottom-navigation v-model="value" :background-color="color" dark shift>
-        <v-btn>
-          <span>
-            <router-link to="/results">SearchResults</router-link>
-          </span>
-
-          <v-icon>mdi-television-play</v-icon>
-        </v-btn>
-
-        <v-btn>
-          <span> <router-link to="/media">Media</router-link></span>
-
-          <v-icon>mdi-music-note</v-icon>
-        </v-btn>
-
-        <v-btn>
-          <span> <router-link to="/play">PlayList</router-link></span>
-
-          <v-icon>mdi-album</v-icon>
-        </v-btn>
-
-        <v-btn>
-          <span>Playlist</span>
-
-          <v-icon>mdi-playlist-music</v-icon>
-        </v-btn>
-      </v-bottom-navigation>
     </v-footer>
-    <router-view></router-view>
   </v-app>
 </template>
 
