@@ -127,6 +127,11 @@ export default {
     ...mapGetters(["getSearchList"]),
     ...mapGetters(["getCurrentPlaylist"]),
   },
+  watch:{
+getSong(song){
+      this.song = song
+    },
+  },
   methods: {
     ...mapActions(["searchSong"]),
 
