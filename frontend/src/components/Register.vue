@@ -60,14 +60,14 @@
       </form>
 
       <div v-if="!user.loggedIn && !loginModal && !registerModal">
-        <v-btn rounded @click="showRegisterForm">Register</v-btn>
+        <v-btn rounded color="green" @click="showRegisterForm">Register</v-btn>
         <br /><br />
-        <v-btn rounded @click="showLoginForm">Login</v-btn>
+        <v-btn color="green" rounded @click="showLoginForm">Login</v-btn>
       </div>
 
       <div v-if="user.loggedIn">
         <div v-for="(value, name) in user" v-bind:key="name">
-          {{ name }}: {{ value }}
+          <v-button>{{ name }}: {{ value }}</v-button>
         </div>
         <button v-on:click="logOut">Logout</button>
       </div>

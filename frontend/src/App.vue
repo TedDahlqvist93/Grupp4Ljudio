@@ -28,15 +28,14 @@
     <v-navigation-drawer app width="300" class=""> </v-navigation-drawer>
 
     <!-- List with songs -->
-    <v-navigation-drawer app clipped right>
-      <Register />
-    </v-navigation-drawer>
+    <v-navigation-drawer app clipped right> </v-navigation-drawer>
     <!-- navbar for mobilescreen -->
 
     <media-display></media-display>
     <v-main>
       <v-card>
-        <span><SearchResults /></span></v-card
+        <Register />
+        <SearchResults /></v-card
     ></v-main>
     <v-footer app color="transparent" height="140" inset>
       <v-app-bar color="#424242" rounded inset>
