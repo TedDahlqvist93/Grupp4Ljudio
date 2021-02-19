@@ -25,9 +25,7 @@
     </v-app-bar>
 
     <!-- List with playlists  -->
-    <v-navigation-drawer app width="300" class="">
-      <SearchResults />
-    </v-navigation-drawer>
+    <v-navigation-drawer app width="300" class=""> </v-navigation-drawer>
 
     <!-- List with songs -->
     <v-navigation-drawer app clipped right>
