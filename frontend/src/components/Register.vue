@@ -5,12 +5,12 @@
       <form @submit.prevent="this.loginForm" v-if="loginModal">
         <div>
           <label for="email">E-mail</label>
-          <input type="text" name="email" v-model="loginForm.email" required />
+          <input type="email" name="email" v-model="loginForm.email" required />
         </div>
         <div>
           <label for="password">Password</label>
           <input
-            type="text"
+            type="password"
             name="password"
             v-model="loginForm.password"
             required
@@ -41,7 +41,7 @@
         <div>
           <label for="email">E-mail</label>
           <input
-            type="text"
+            type="email"
             name="email"
             v-model="registerForm.email"
             required
@@ -50,7 +50,7 @@
         <div>
           <label for="password">Password</label>
           <input
-            type="text"
+            type="password"
             name="password"
             v-model="registerForm.password"
             required
