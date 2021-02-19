@@ -28,12 +28,20 @@ export default {
     ...mapGetters(["getSearchList"]),
     ...mapActions(["addSong"]),
     setSong(song) {
+      this.$store.commit("setIsPlaying", false);
+      this.$store.commit("setCurrentSong", {
+        id: '',
+        title: '',
+        artist: '',
+        album: '',
+      })
       this.$store.commit("setCurrentSong", {
         id: song.videoId,
         title: song.name,
         artist: song.artist.name,
         album: song.album.name,
       });
+      
       this.$store.commit("setIsPlaying", true);
     },
     async add(song) {

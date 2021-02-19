@@ -2,11 +2,18 @@ import Vue from "vue";
 import Vuex from "vuex";
 
 import axios from 'axios'
+import createPersistedState from "vuex-persistedstate";
+
 axios.defaults.withCredentials = true
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+    plugins: [createPersistedState()],
+  mutations: {
+    increment: state => state.count++,
+    decrement: state => state.count--
+  },
     state: {
         user: {
             id: '',

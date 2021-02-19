@@ -55,12 +55,20 @@ export default {
        ...mapActions(["deleteSong"]),
 
        playSong(song) {
+        this.$store.commit("setIsPlaying", false)
+        this.$store.commit("setCurrentSong", {
+        id: "",
+        title: "",
+        artist: "",
+        album: "",
+      })
       this.$store.commit("setCurrentSong", {
         id: song.key,
-        title: song.name,
-        artist: song.artist.name,
-        album: song.album.name,
+        title: song.title,
+        artist: song.artist,
+        album: song.album,
       });
+      
       this.$store.commit("setIsPlaying", true);
     },
       async remove(data) {
