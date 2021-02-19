@@ -6,6 +6,7 @@ const express = require("express");
 const app = express();
 
 const cors = require("cors");
+
 app.use(
   cors({
     allowedHeaders: ["Content-Type"],
@@ -13,6 +14,7 @@ app.use(
     preflightContinue: true,
   })
 );
+
 
 // add body-parser to express
 const bodyParser = require("body-parser");

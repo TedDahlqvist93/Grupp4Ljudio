@@ -1,7 +1,8 @@
 <template>
   <div class="register">
     <div>
-      <form @submit.prevent="this.loginForm" v-if="this.loginModal">
+      <div>
+      <form @submit.prevent="this.loginForm" v-if="loginModal">
         <div>
           <label for="email">E-mail</label>
           <input type="email" name="email" v-model="loginForm.email" required />
@@ -15,10 +16,10 @@
             required
           />
         </div>
-        <button type="submit" @click="submitLogin">Login</button>
-        <button v-on:click="showLoginForm">Close</button>
+        <v-btn rounded small color="primary" dark @click="submitLogin" max-width="120"> Login </v-btn>
+        <v-btn rounded small color="primary" dark @click="loginModal = !loginModal" max-width="120"> Close </v-btn>
       </form>
-      <form @submit.prevent="this.registerForm" v-if="this.registerModal">
+      <form @submit.prevent="registerForm" v-if="registerModal">
         <div>
           <label for="email">First Name</label>
           <input
@@ -55,21 +56,16 @@
             required
           />
         </div>
-        <button type="submit" @click="submitRegister">Register</button>
-        <button v-on:click="showRegisterForm">Close</button>
+        <button type="submit" @click="submitRegister">Sign Up</button>
+        <v-btn rounded small color="primary" dark @click="registerModal = !registerModal" max-width="120"> Close </v-btn>
       </form>
-
-      <div v-if="!user.loggedIn && !loginModal && !registerModal">
-        <v-btn rounded @click="showRegisterForm">Register</v-btn>
-        <br /><br />
-        <v-btn rounded @click="showLoginForm">Login</v-btn>
-      </div>
-
-      <div v-if="user.loggedIn">
-        <div v-for="(value, name) in user" v-bind:key="name">
-          {{ name }}: {{ value }}
+        <div v-if="user.loggedIn">
+            <v-btn rounded small color="primary" dark @click="logOut" max-width="120"> Log out </v-btn>
         </div>
-        <button v-on:click="logOut">Logout</button>
+        <div v-else-if="!loginModal && !registerModal">
+          <v-btn rounded small color="primary" dark @click="loginModal = !loginModal" max-width="120"> Login </v-btn>
+          <v-btn rounded small color="primary" dark @click="registerModal = !registerModal" max-width="120"> Register </v-btn>
+        </div>
       </div>
     </div>
   </div>
@@ -97,33 +93,29 @@ export default {
       },
     };
   },
+  async mounted() {
+    await this.getPlaylists(this.$store.state.user.id)
+  },
   methods: {
     ...mapActions(["register"]),
-    ...mapActions(["logout"]),
-    ...mapActions(["login"]),
+    ...mapActions(['logout']),
+    ...mapActions(['login']),
+    ...mapActions(['getPlaylists']),
     ...mapGetters(["getUser"]),
-    async submitRegister(e) {
-      await this.register(this.registerForm)
-        .then((response) => {
-          this.user = this.getUser();
-          if (this.user.loggedIn) {
-            console.log("email in use");
-            this.registerForm = {};
-            this.registerModal = false;
-            this.loginModal = false;
-          }
+
+    async submitRegister() {
+        await this.register(this.registerForm)
+        .then(response => {
+            this.user = this.getUser();
+            if (this.user.loggedIn) {
+              this.registerForm = {};
+              this.registerModal = false;
+              this.loginModal = false;
+            }
         })
         .catch((error) => {
           console.log("err", error);
         });
-    },
-    async showRegisterForm() {
-      this.registerModal = !this.registerModal;
-      await this.$nextTick();
-    },
-    async showLoginForm() {
-      this.loginModal = !this.loginModal;
-      await this.$nextTick();
     },
     async logOut() {
       await this.logout(this.user)
@@ -136,14 +128,12 @@ export default {
           console.log(error);
         });
     },
-    async submitLogin(e) {
-      console.log("submit");
-      await this.login(this.loginForm)
-        .then((response) => {
-          console.log("then");
-          this.registerModal = false;
-          this.loginModal = false;
-          this.user = this.getUser();
+    async submitLogin() {
+        await this.login(this.loginForm)
+        .then(response => {
+            this.registerModal = false;
+            this.loginModal = false;
+            this.user = this.getUser();
         })
         .catch((error) => {
           console.log(error);
@@ -178,5 +168,8 @@ input {
 }
 #error {
   color: red;
+}
+.auth-buttons {
+  direction: "rtl";
 }
 </style>
