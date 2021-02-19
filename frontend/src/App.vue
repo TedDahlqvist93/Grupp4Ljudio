@@ -38,9 +38,9 @@
       <v-card>
         <span><SearchResults /></span></v-card
     ></v-main>
-    <v-footer app color="transparent" height="140" inset>
+    <v-footer app color="transparent" height="140" inset fixed>
       <v-app-bar color="#424242" rounded inset>
-        <v-btn color="grey" width="15%" @click="playPrevious()">
+        <v-btn rounded color="grey" width="15%" @click="playPrevious()">
           <v-icon>mdi-skip-previous-circle</v-icon>
         </v-btn>
         <v-btn
@@ -48,22 +48,25 @@
           color="grey"
           width="15%"
           @click="play(true)"
+          rounded
         >
           <v-icon>mdi-play</v-icon>
         </v-btn>
-        <v-btn v-else color="grey" width="15%" @click="play(false)">
+        <v-btn rounded v-else color="grey" width="15%" @click="play(false)">
           <v-icon>mdi-pause</v-icon>
         </v-btn>
-        <v-btn color="grey" width="15%" @click="playNext()">
+        <v-btn rounded color="grey" width="15%" @click="playNext()">
           <v-icon>mdi-skip-next-circle</v-icon>
         </v-btn>
+         
         <v-slider
           min="0"
           max="100"
           value="100"
           thumb-label
           prepend-icon="mdi-volume-high"
-          @drag="changeVolume()"
+          v-model="value"
+          @input="changeVolume(value)"
         >
         </v-slider>
       </v-app-bar>
@@ -91,27 +94,19 @@ export default {
       value: 1,
       text: "",
       query: "",
+      value:"100"
     };
   },
   computed: {
-    color() {
-      switch (this.value) {
-        case 0:
-          return "#880E4F";
-        case 1:
-          return "teal";
-        case 2:
-          return "cyan";
-        case 3:
-          return "indigo";
-        default:
-          return "#880E4F";
-      }
-    },
+    
     ...mapGetters(["getSearchList"]),
   },
   methods: {
     ...mapActions(["searchSong"]),
+
+    changeVolume(volume){
+      this.$store.commit("setVolume", volume);
+    },
     play(bool) {
       this.$store.commit("setIsPlaying", bool);
     },
