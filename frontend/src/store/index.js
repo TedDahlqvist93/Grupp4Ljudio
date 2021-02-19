@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 
 import axios from 'axios'
+axios.defaults.withCredentials = true
 
 Vue.use(Vuex)
 
@@ -27,11 +28,10 @@ export default new Vuex.Store({
         currentPlayList: {
             id: null,
             name: '',
-            songs: [],
+            userId: '',
         },
-        allPlaylists: {
-            playlists: []
-        },
+        allPlaylists: [],
+        allSongs: [],
         searchList: {
             search: '',
             songs: [],
@@ -55,7 +55,10 @@ export default new Vuex.Store({
             return state.currentPlaylist;
         },
         getAllPlaylists: state => {
-            return state.currentPlaylist;
+            return state.allPlaylists;
+        },
+        getAllSongs: state => {
+            return state.allSongs;
         },
         getSearchList: state => {
           return state.searchList;
@@ -75,14 +78,24 @@ export default new Vuex.Store({
             state.currentSong = status;
         },
         setCurrentPlaylist: (state, status) => {
-            state.currentPlaylist = status;
+            console.log(status)
+            state.currentPlaylist = status
+            console.log(state.currentPlayList)
         },
         setAllPlaylists: (state, status) => {
             state.allPlaylists = status;
         },
+        setAllSongs: (state, status) => {
+            state.allSongs = status;
+        },
         setSearchList: (state ,status) => {
             state.searchList = status
+        },
+        addPlaylist: (state, status) => {
+            state.allPlaylists.push(status);
+            console.log(state.allPlaylists)
         }
+
     },
     actions: {
         async searchSong({ commit }, query) {
@@ -126,42 +139,43 @@ export default new Vuex.Store({
                     return response
                 })
         },
-
-        async getPlaylists(data) {
-            await Playlist.get(data)
-                .then(response => {
-                    console.log(response);
-                })
-                .catch(error => {
-                    console.log(error);
+        async getPlaylists({commit}, data) {
+            await axios.get(`http://localhost:3000/api/playlists/${data}`, {
+                withCredentials: true
+                }).then(response => {
+                    commit('setAllPlaylists', response.data)
                 })
         },
-        async addPlaylist(data) {
-            await axios.post('http://localhost:3000/api/playlists', data)
+        async addPlaylist({dispatch}, data) {
+            await axios.post(`http://localhost:3000/api/playlists/${data.userId}/${data.name}`)
                 .then(response => {
-                    console.log(response);
+                    dispatch('getPlaylists', data.userId);
+                    return response
                 })
         },
-        async deletePlaylist(data) {
-            await axios.delete('http://localhost:3000/playlists', data)
+        async deletePlaylist({dispatch}, data) {
+            await axios.delete(`http://localhost:3000/api/playlists/${data.userId}/${data.id}`)
                 .then(response => {
-                    console.log(response);
+                    dispatch('getPlaylists', data.userId)
+                    return response
                 })
         },
-        async getSongs(data) {
-            await axios.get('http://localhost:3000/api/songs', data)
-                .then(response => {
-                    console.log(response);
-                })
+        async getSongs({commit}, data) {
+            await axios.get(`http://localhost:3000/api/songs/${data.userId}/${data.id}`, {
+                withCredentials: true
+            }).then(response => {
+                    commit('setAllSongs', response.data)
+            })
         },
-        async addSong(data) {
+        async addSong({dispatch}, data) {
             await axios.post('http://localhost:3000/api/songs', data)
                 .then(response => {
-                    console.log(response);
+                    dispatch('getSongs', {userId: data.userId, id: data.id});
+                    return response
                 })
         },
         async deleteSong(data) {
-            await axios.delete('http://localhost:3000/songs', data)
+            await axios.delete(`http://localhost:3000/api/songs/${data.userId}/${data.id}`)
                 .then(response => {
                     console.log(response);
                 })

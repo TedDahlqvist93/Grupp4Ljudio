@@ -16,11 +16,8 @@ module.exports = (app, db) => {
                 response.status(400)
                 response.json({error: "database error"})
             })
-
-
-
+        response.status(200)
         response.json({firstName, lastName, email, loggedIn: true})
-
     });
 
     // authentication: perform login
@@ -38,6 +35,7 @@ module.exports = (app, db) => {
             request.session.user = user;
             user.loggedIn = true;
             delete user.password;
+            response.status(200)
             response.json(user);
         } else {
             response.status(401); // unauthorized  https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
@@ -48,7 +46,7 @@ module.exports = (app, db) => {
     // authentication: get logged in user
     app.get("/api/login", async (request, response) => {
         let user;
-        if (request.session.user) {
+        if (request.session.user.loggedIn) {
             user = await db.query(
                 "SELECT * FROM users WHERE email = ? AND password = ?",
                 [request.session.user.email, request.session.user.password]
@@ -67,46 +65,49 @@ module.exports = (app, db) => {
 
     // logga ut
     app.delete("/api/login", async (request, response) => {
-        console.log(request.data)
         request.session.destroy(() => {
             response.json({loggedIn: false});
         });
     });
 
     // get playlist
-    app.get('/api/playlists/', async (request, response) => {
-        if (!request.session.user) {
+    app.get('/api/playlists/:userId', async (request, response) => {
+        const userId = request.params.userId
+        if (!request.session.user.loggedIn) {
             response.status(403) // forbidden
             response.json({error: 'not logged in'})
             return;
         }
         let result = await db.query(
-            `SELECT DISTINCT id, name
-            FROM playlist
-            WHERE id = ? AND user_id = ?`,
-            request.params.id, request.body.user_id)
+            `SELECT id, name, user_id
+            FROM playlists
+            WHERE user_id = ${userId}`)
+            .catch((err) => {
+                console.log(err)
+            })
         response.json(result);
     })
 
 
     // add playlist
-    app.post('/api/playlists/', async (request, response) => {
-        if (!request.session.user) {
+    app.post('/api/playlists/:userId/:name', async (request, response) => {
+        if (!request.session.user.loggedIn) {
             response.status(403) // forbidden
             response.json({error: 'not logged in'})
             return;
         }
         let result = await db.query(`
-            INSERT INTO playlist
-            SET id, user_id, name
-            WHERE id = ? AND AND user_id = ? AND name = ?`,
-            request.params.id, request.body.user_id, request.body.name)
-        response.json(result);
+            INSERT INTO playlists (user_id, name)
+            VALUES (?, ?)`,
+           [request.params.userId, request.params.name])
+        console.log(response)
+        response.json(result.insertId);
     })
 
     // delete playlist
-    app.delete("/api/playlists/", async (request, response) => {
-        if (!request.session.user) {
+    app.delete("/api/playlists/:userId/:id", async (request, response) => {
+        console.log(request.params.id, request.params.userId)
+        if (!request.session.user.loggedIn) {
             response.status(403) // forbidden
             response.json({error: 'not logged in'})
             return;
@@ -114,27 +115,30 @@ module.exports = (app, db) => {
         let result = await db.query(
             `DELETE FROM playlists
             WHERE id = ? AND user_id = ?`,
-            request.params.id, request.body.user_id)
+            [request.params.id, request.params.userId])
+            .catch((error) => { console.log(error )})
+        console.log(result)
         response.json(result)
     })
 
     // get songs
-    app.get('/api/songs/', async (request, response) => {
-        if (!request.session.user) {
+    app.get('/api/songs/:userId/:id', async (request, response) => {
+        if (!request.session.user.loggedIn) {
             response.status(403) // forbidden
             response.json({error: 'not logged in'})
             return;
         }
         let result = await db.query(
-            `SELECT id, song_id, title, artist, album
-            FROM songs
-            WHERE id = ?`, request.params.id)
+            `SELECT * FROM songs 
+            WHERE user_id = ? AND id = ?`, [request.params.userId, request.params.id])
         response.json(result);
     })
 
     // add song
     app.post('/api/songs/', async (request, response) => {
-        if (!request.session.user) {
+        console.log(request.body)
+        console.log(request.data)
+        if (!request.session.user.loggedIn) {
             response.status(403) // forbidden
             response.json({error: 'not logged in'})
             return;
@@ -142,23 +146,20 @@ module.exports = (app, db) => {
         let result = await db.query(
             `INSERT INTO songs
             SET id, song_id, name, artist, album
-            WHERE id = ? AND name = ? AND artist = ? AND album = ?`
-            , request.params.id, request.body.song_id, request.body.name
-            , request.body.artist, request.body.album)
+            WHERE id = ${request.body.id} AND user_id = ${request.body.userId} title = ${request.body.title} AND artist = ${request.body.artist} AND album = ${request.body.album}`)
         response.json(result);
     })
 
     // delete song
-    app.delete("/api/songs/", async (request, response) => {
-        if (!request.session.user) {
+    app.delete("/api/songs/:userId/:id", async (request, response) => {
+        if (!request.session.user.loggedIn) {
             response.status(403) // forbidden
             response.json({error: 'not logged in'})
             return;
         }
         let result = await db.query(`
             DELETE FROM songs
-            WHERE id = ? AND song_id = ?`,
-            request.body.id, request.body.song_id)
+            WHERE id = ${request.body.id} AND song_id = ${request.body.userId}`)
         response.json(result)
     })
 }

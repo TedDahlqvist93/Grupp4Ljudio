@@ -7,9 +7,13 @@ const app = express();
 
 const cors = require("cors");
 app.use(cors({
+    'Access-Control-Allow-Origin': 'http://localhost:8080',
+    'Access-Control-Allow-Credentials': true,
+    'origin': 'http://localhost:8080',
     'allowedHeaders': ['Content-Type'],
-    'origin': '*',
-    'preflightContinue': true
+    'Access-Control-Allow-Methods': '*',
+    'preflightContinue': true,
+    'credentials': true
 }));
 
 // add body-parser to express

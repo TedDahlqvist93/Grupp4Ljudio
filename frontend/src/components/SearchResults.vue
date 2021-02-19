@@ -1,9 +1,10 @@
 <template>
-  <div>
+    <div class="dropdown pull-right">
     <h1>Search {{this.$store.state.searchList.search}}</h1>
     <ul>
       <li @click="setSong(song)" v-for="song in this.$store.state.searchList.songs" :key="song.videoId">
         {{ song.name }}-{{ song.artist.name}}
+          <button v-on:click="add(song)">add</button>
       </li>
     </ul>
   </div>
@@ -23,6 +24,7 @@ export default {
   },
   methods: {
     ...mapGetters(["getSearchList"]),
+    ...mapActions(["addSong"]),
     setSong(song) {
       this.$store.commit("setCurrentSong", {
         id: song.videoId,
@@ -31,6 +33,18 @@ export default {
         album: song.album.name
       });
     },
+    async add(song) {
+      const format = {
+        key: song.videoId,
+        title: song.name,
+        artist: song.artist.name,
+        album: song.album.name
+      }
+      await this.addSong(format)
+      .then(response => {
+        console.log(response)
+      })
+    }
   },
 };
 </script>

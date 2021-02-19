@@ -21,20 +21,28 @@
         max-width="120"
       >
       </v-btn>
+      <h1> {{selected}} </h1>
     </v-app-bar>
 
     <!-- List with playlists  -->
     <v-navigation-drawer app width="300" class="">
-      <SearchResults/>
+       {{ selected }}
+      <Register/>
+     <div v-if="this.$store.state.user.loggedIn">
+      <Songs/>
+     </div>
     </v-navigation-drawer>
 
     <!-- List with songs -->
     <v-navigation-drawer app clipped right>
-        <Register/>
+     <div v-if="this.$store.state.user.loggedIn">
+      <SearchResults/>
+      <!--<Playlist/>-->
+     </div>
     </v-navigation-drawer>
     <!-- navbar for mobilescreen -->
 
-    <media-display></media-display>
+    <!--<media-display></media-display> -->
     <v-footer app color="transparent" height="140" inset>
       <v-app-bar color="green" inset>
         <v-btn color="white" width="15%" @click="playPrevious()">
@@ -69,6 +77,7 @@ import Playlist from "./components/Playlist.vue";
 import { mapActions, mapGetters } from "vuex";
 import MediaDisplay from "./components/MediaDisplay.vue";
 import Register from "./components/Register.vue";
+import Songs from "./components/Songs.vue";
 
 export default {
   name: "App",
@@ -78,13 +87,24 @@ export default {
     Playlist,
     MediaDisplay,
     Register,
+    Songs,
   },
   data() {
     return {
       value: 1,
       text: "",
       query: "",
+      selected: null,
     };
+  },
+  methods: {
+    async update() {
+      this.selected = this.$store.state.currentPlaylist
+      console.log(this.selected)
+      await this.$nextTick(() =>{
+        this.selected = this.$store.state.currentPlaylist
+      })
+    }
   },
   computed: {
     color() {
@@ -102,6 +122,7 @@ export default {
       }
     },
     ...mapGetters(["getSearchList"]),
+    ...mapGetters(["getCurrentPlaylist"]),
   },
   methods: {
     ...mapActions(["searchSong"]),

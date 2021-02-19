@@ -1,7 +1,7 @@
 <template>
   <div class="register">
     <div>
-      <form @submit.prevent="this.loginForm" v-if="this.loginModal">
+      <form @submit.prevent="this.loginForm" v-if="loginModal">
         <div>
           <label for="email">E-mail</label>
           <input type="text" name="email" v-model="loginForm.email" required />
@@ -11,9 +11,9 @@
           <input type="text" name="password" v-model="loginForm.password" required />
         </div>
         <button type="submit" @click="submitLogin">Login</button>
-        <button v-on:click="showLoginForm">Close</button>
+        <button v-on:click="loginModal = !loginModal">Close</button>
       </form>
-      <form @submit.prevent="this.registerForm" v-if="this.registerModal">
+      <form @submit.prevent="registerForm" v-if="registerModal">
         <div>
           <label for="email">First Name</label>
           <input type="text" name="email" v-model="registerForm.firstName" required />
@@ -30,17 +30,14 @@
           <label for="password">Password</label>
           <input type="text" name="password" v-model="registerForm.password" required />
         </div>
-        <button type="submit" @click="submitRegister">Register</button>
-        <button v-on:click="showRegisterForm">Close</button>
+        <button type="submit" @click="submitRegister">Sign Up</button>
+        <button v-on:click="registerModal = !registerModal">Close</button>
       </form>
-        <div v-if="!user.loggedIn && !loginModal && !registerModal">
-            <button @click="showRegisterForm">Register</button>
-            <button @click="showLoginForm">Login</button>
+        <div class="auth-buttons" v-if="!user.loggedIn && !loginModal && !registerModal">
+            <button @click="registerModal = !registerModal">Sign Up</button>
+            <button @click="loginModal = !loginModal">Login</button>
         </div>
         <div v-if="user.loggedIn">
-            <div v-for="(value, name) in user" v-bind:key="name">
-              {{ name }}: {{ value }}
-            </div>
             <button v-on:click="logOut">Logout</button>
         </div>
     </div>
@@ -69,18 +66,20 @@ export default {
       },
     };
   },
+  async mounted() {
+  },
   methods: {
     ...mapActions(["register"]),
     ...mapActions(['logout']),
     ...mapActions(['login']),
+    ...mapActions(['getPlaylists']),
     ...mapGetters(["getUser"]),
 
-    async submitRegister(e) {
+    async submitRegister() {
         await this.register(this.registerForm)
         .then(response => {
             this.user = this.getUser();
             if (this.user.loggedIn) {
-              console.log("email in use")
               this.registerForm = {};
               this.registerModal = false;
               this.loginModal = false;
@@ -90,14 +89,6 @@ export default {
             console.log("err", error);
         })
 
-    },
-    async showRegisterForm() {
-        this.registerModal = !this.registerModal;
-        await this.$nextTick();
-    },
-    async showLoginForm() {
-        this.loginModal = !this.loginModal;
-        await this.$nextTick();
     },
     async logOut() {
         await this.logout(this.user)
@@ -110,11 +101,9 @@ export default {
             console.log(error);
         })
     },
-    async submitLogin(e) {
-        console.log("submit")
+    async submitLogin() {
         await this.login(this.loginForm)
         .then(response => {
-            console.log("then")
             this.registerModal = false;
             this.loginModal = false;
             this.user = this.getUser();
@@ -153,5 +142,8 @@ input {
 }
 #error {
   color: red;
+}
+.auth-buttons {
+  direction: "rtl";
 }
 </style>
