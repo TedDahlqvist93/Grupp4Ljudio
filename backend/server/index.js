@@ -45,7 +45,7 @@ const mysql = require("mysql");
 const db = mysql.createConnection({
   host: "127.0.0.1",
   user: "root",
-  password: "some_pass",
+  password: "Victorm9803",
   database: "nodemusic",
 });
 // vi gör om mysql-metoderna connect och query till promise-metoder så att vi kan använda async/await för att vänta på databasen

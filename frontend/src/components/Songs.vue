@@ -5,7 +5,7 @@
       <ul>
         <li @click="playSong(song)" 
             v-for="song in songs" 
-            :key="song.id">
+            :key="song.key">
             {{ song.title }} - {{ song.artist }}
             <br>
             <br>
@@ -73,6 +73,8 @@ export default {
 
         await this.deleteSong(params)
         .then(() => {
+          
+        
         })
       },
       async update() {

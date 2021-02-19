@@ -159,7 +159,7 @@ module.exports = (app, db) => {
             return;
         }
         let result = await db.query(
-            `DELETE FROM songs WHERE id = ${request.params.id} AND user_id = ${request.params.userId} AND key = ${request.params.key}`)
+            `DELETE FROM songs WHERE id = ${request.params.id} AND user_id = ${request.params.userId} AND \`key\` = "${request.params.key}"`)
             .catch((error) => {console.log(error)})
         response.json(result)
     })
