@@ -46,7 +46,7 @@ module.exports = (app, db) => {
     // authentication: get logged in user
     app.get("/api/login", async (request, response) => {
         let user;
-        if (request.session.user.loggedIn) {
+        if (request.session.user) {
             user = await db.query(
                 "SELECT * FROM users WHERE email = ? AND password = ?",
                 [request.session.user.email, request.session.user.password]
@@ -55,7 +55,6 @@ module.exports = (app, db) => {
         }
         if (user && user.email) {
             user.loggedIn = true;
-            delete user.password;
             response.json(user);
         } else {
             response.status(401); // unauthorized  https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
@@ -73,7 +72,7 @@ module.exports = (app, db) => {
     // get playlist
     app.get('/api/playlists/:userId', async (request, response) => {
         const userId = request.params.userId
-        if (!request.session.user.loggedIn) {
+        if (!request.session.user) {
             response.status(403) // forbidden
             response.json({error: 'not logged in'})
             return;
@@ -91,7 +90,7 @@ module.exports = (app, db) => {
 
     // add playlist
     app.post('/api/playlists/:userId/:name', async (request, response) => {
-        if (!request.session.user.loggedIn) {
+        if (!request.session.user) {
             response.status(403) // forbidden
             response.json({error: 'not logged in'})
             return;
@@ -99,14 +98,14 @@ module.exports = (app, db) => {
         let result = await db.query(`
             INSERT INTO playlists (user_id, name)
             VALUES (?, ?)`,
-           [request.params.userId, request.params.name])
+            [request.params.userId, request.params.name])
         response.json(result.insertId);
     })
 
     // delete playlist
     app.delete("/api/playlists/:userId/:id", async (request, response) => {
         console.log(request.params.id, request.params.userId)
-        if (!request.session.user.loggedIn) {
+        if (!request.session.user) {
             response.status(403) // forbidden
             response.json({error: 'not logged in'})
             return;
@@ -115,19 +114,19 @@ module.exports = (app, db) => {
             `DELETE FROM playlists
             WHERE id = ? AND user_id = ?`,
             [request.params.id, request.params.userId])
-            .catch((error) => { console.log(error )})
+            .catch((error) => {console.log(error)})
         response.json(result)
     })
 
     // get songs
     app.get('/api/songs/:userId/:id', async (request, response) => {
-        if (!request.session.user.loggedIn) {
+        if (!request.session.user) {
             response.status(403) // forbidden
             response.json({error: 'not logged in'})
             return;
         }
         let result = await db.query(
-            `SELECT * FROM songs 
+            `SELECT * FROM songs
             WHERE user_id = ? AND id = ?`, [request.params.userId, request.params.id])
         response.json(result);
     })
@@ -135,12 +134,12 @@ module.exports = (app, db) => {
     // add song
     app.post('/api/songs/', async (request, response) => {
         const data = request.body.data
-        if (!request.session.user.loggedIn) {
+        if (!request.session.user) {
             response.status(403) // forbidden
             response.json({error: 'not logged in'})
             return;
         }
-        await db.query(`INSERT INTO songs SET id = ?, key = ?, user_id = ?, title = ?, artist = ?, album = ?`,
+        let result = await db.query(`INSERT INTO songs VALUES (?,?,?,?,?,?)`,
             [data.id, data.key, data.userId, data.title, data.artist, data.album])
             .catch(error => {
                 console.log(error)
@@ -151,15 +150,17 @@ module.exports = (app, db) => {
     })
 
     // delete song
-    app.delete("/api/songs/:userId/:id", async (request, response) => {
-        if (!request.session.user.loggedIn) {
+    // TODO: Denna ger error, vet inte varför men den klagar över queryn. Kolla över queryn så borde delete funka. 
+    app.delete("/api/songs/:userId/:id/:key", async (request, response) => {
+        console.log(request.params.id, request.params.key)
+        if (!request.session.user) {
             response.status(403) // forbidden
             response.json({error: 'not logged in'})
             return;
         }
-        let result = await db.query(`
-            DELETE FROM songs
-            WHERE id = ${request.body.id} AND song_id = ${request.body.userId}`)
+        let result = await db.query(
+            `DELETE FROM songs WHERE id = ${request.params.id} AND user_id = ${request.params.userId} AND key = ${request.params.key}`)
+            .catch((error) => {console.log(error)})
         response.json(result)
     })
 }

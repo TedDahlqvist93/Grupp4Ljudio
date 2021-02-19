@@ -1,6 +1,7 @@
 <template>
   <div class="register">
     <div>
+      <div>
       <form @submit.prevent="this.loginForm" v-if="loginModal">
         <div>
           <label for="email">E-mail</label>
@@ -8,38 +9,64 @@
         </div>
         <div>
           <label for="password">Password</label>
-          <input type="text" name="password" v-model="loginForm.password" required />
+          <input
+            type="text"
+            name="password"
+            v-model="loginForm.password"
+            required
+          />
         </div>
-        <button type="submit" @click="submitLogin">Login</button>
-        <button v-on:click="loginModal = !loginModal">Close</button>
+        <v-btn rounded small color="primary" dark @click="submitLogin" max-width="120"> Login </v-btn>
+        <v-btn rounded small color="primary" dark @click="loginModal = !loginModal" max-width="120"> Close </v-btn>
       </form>
       <form @submit.prevent="registerForm" v-if="registerModal">
         <div>
           <label for="email">First Name</label>
-          <input type="text" name="email" v-model="registerForm.firstName" required />
+          <input
+            type="text"
+            name="email"
+            v-model="registerForm.firstName"
+            required
+          />
         </div>
         <div>
           <label for="email">Last Name</label>
-          <input type="text" name="email" v-model="registerForm.lastName" required />
+          <input
+            type="text"
+            name="email"
+            v-model="registerForm.lastName"
+            required
+          />
         </div>
         <div>
           <label for="email">E-mail</label>
-          <input type="text" name="email" v-model="registerForm.email" required />
+          <input
+            type="text"
+            name="email"
+            v-model="registerForm.email"
+            required
+          />
         </div>
         <div>
           <label for="password">Password</label>
-          <input type="text" name="password" v-model="registerForm.password" required />
+          <input
+            type="text"
+            name="password"
+            v-model="registerForm.password"
+            required
+          />
         </div>
         <button type="submit" @click="submitRegister">Sign Up</button>
-        <button v-on:click="registerModal = !registerModal">Close</button>
+        <v-btn rounded small color="primary" dark @click="registerModal = !registerModal" max-width="120"> Close </v-btn>
       </form>
-        <div class="auth-buttons" v-if="!user.loggedIn && !loginModal && !registerModal">
-            <button @click="registerModal = !registerModal">Sign Up</button>
-            <button @click="loginModal = !loginModal">Login</button>
-        </div>
         <div v-if="user.loggedIn">
-            <button v-on:click="logOut">Logout</button>
+            <v-btn rounded small color="primary" dark @click="logOut" max-width="120"> Log out </v-btn>
         </div>
+        <div v-else-if="!loginModal && !registerModal">
+          <v-btn rounded small color="primary" dark @click="loginModal = !loginModal" max-width="120"> Login </v-btn>
+          <v-btn rounded small color="primary" dark @click="registerModal = !registerModal" max-width="120"> Register </v-btn>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -55,8 +82,8 @@ export default {
       registerModal: false,
       loginModal: false,
       loginForm: {
-          email: "",
-          password: "",
+        email: "",
+        password: "",
       },
       registerForm: {
         email: "",
@@ -67,6 +94,7 @@ export default {
     };
   },
   async mounted() {
+    await this.getPlaylists(this.$store.state.user.id)
   },
   methods: {
     ...mapActions(["register"]),
@@ -86,20 +114,19 @@ export default {
             }
         })
         .catch((error) => {
-            console.log("err", error);
-        })
-
+          console.log("err", error);
+        });
     },
     async logOut() {
-        await this.logout(this.user)
-        .then(response => {
-            this.registerModal = false;
-            this.loginModal = false;
-            this.user = this.getUser();
+      await this.logout(this.user)
+        .then((response) => {
+          this.registerModal = false;
+          this.loginModal = false;
+          this.user = this.getUser();
         })
         .catch((error) => {
-            console.log(error);
-        })
+          console.log(error);
+        });
     },
     async submitLogin() {
         await this.login(this.loginForm)
@@ -109,10 +136,9 @@ export default {
             this.user = this.getUser();
         })
         .catch((error) => {
-            console.log(error);
-        })
-    }
-
+          console.log(error);
+        });
+    },
   },
 };
 </script>

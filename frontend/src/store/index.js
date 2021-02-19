@@ -18,6 +18,7 @@ export default new Vuex.Store({
         player: {
             isPlaying: false,
             showVideo: false,
+            volume: 100,
         },
         currentSong: {
             id: null,
@@ -71,6 +72,9 @@ export default new Vuex.Store({
         setIsPlaying: (state, status) => {
             state.player.isPlaying = status;
         },
+        setVolume: (state, status) => {
+            state.player.volume = status;
+        },
         setShowVideo: (state, status) => {
             state.showVideo = status;
         },
@@ -101,9 +105,12 @@ export default new Vuex.Store({
                    commit('setSearchList', { search: query, songs: response.data.content})
                 })
         },
+        // TODO: Hämtar user för att kolla om den kan logga in automatiskt
         async getUser({commit}, data) {
-            await axios.get('http://localhost:3000/api/login', data)
+            await axios.get('http://localhost:3000/api/login', {data: {data},
+                withCredentials: true})
                 .then((response) => {
+                    console.log(reponse.data)
                     commit('setUser', response.data)
             })
         },
@@ -136,6 +143,7 @@ export default new Vuex.Store({
                 })
         },
         async getPlaylists({commit}, data) {
+            console.log("get lists")
             await axios.get(`http://localhost:3000/api/playlists/${data}`, {
                 withCredentials: true
                 }).then(response => {
@@ -171,10 +179,11 @@ export default new Vuex.Store({
                 return response
             })
         },
-        async deleteSong(data) {
-            await axios.delete(`http://localhost:3000/api/songs/${data.userId}/${data.id}`)
+        async deleteSong({dispatch}, data) {
+            await axios.delete(`http://localhost:3000/api/songs/${data.userId}/${data.id}/${data.key}`)
                 .then(response => {
-                    console.log(response);
+                    dispatch('getSongs', {data: {userId: data.userId, id: data.id}})
+                    return response
                 })
         }
     },

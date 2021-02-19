@@ -1,9 +1,7 @@
 <template>
   <v-main>
     <div>
-      <!--  this div will contain the YouTube Player
-        when script gets loaded -->
-      <youtube :video-id="videoId" ref="youtube" :player-vars="playerVars"  resize></youtube>
+      <youtube :video-id="videoId" ref="youtube" :player-vars="playerVars" fitParent resize></youtube>
     </div>
   </v-main>
 </template>
@@ -18,7 +16,6 @@ export default {
       playerVars:{
         autoplay:1,
         controls:0
-
       },
     }
   },
@@ -35,6 +32,9 @@ export default {
     
     pause() {
     return this.$store.state.player.isPlaying;
+    },
+    volume(){
+      return this.$store.state.player.volume;
     }
     
   },
@@ -49,8 +49,12 @@ export default {
     },
       pause() {
       if(this.$store.state.player.isPlaying === false){
-        this.$refs.youtube.player.pauseVideo()
+        this.$refs.youtube.player.pauseVideo();
+        
       }
+    },
+    volume(volume){
+    this.$refs.youtube.player.setVolume(volume);   
     }
   },
   methods: {
@@ -58,5 +62,3 @@ export default {
   }
 }
 </script>
-
-dQw4w9WgXcQ

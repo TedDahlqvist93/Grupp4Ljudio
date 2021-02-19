@@ -6,8 +6,8 @@
         <li v-on:click="playSong(song)" 
             v-for="song in songs" 
             :key="song.id">
-            {{ song.title }} - {{ song.artist }}
-            <button v-on:click="remove(song.id)">delete</button>
+            {{ song.key }} - {{ song.artist }}
+            <button v-on:click="remove(song)">delete</button>
         </li>
       </ul>
     </div>
@@ -51,14 +51,15 @@ export default {
        ...mapActions(["getSongs"]),
        ...mapActions(["addSongs"]),
        ...mapActions(["deleteSong"]),
-      async remove(id) {
+      async remove(data) {
         const userId = this.$store.state.user.id
-        const data = {
-            userId: userId,
-            id: id
+        const params = {
+            key: data.key,
+            id: data.id,
+            userId: userId
             }
 
-        await this.deleteSong(data)
+        await this.deleteSong(params)
         .then(() => {
         })
       },

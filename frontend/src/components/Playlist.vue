@@ -12,7 +12,7 @@
       </ul>
     </div>
     <div v-if="!this.addClicked">
-      <button @click="clicked">Add Playlist</button>
+      <v-btn rounded small color="primary" dark @click="clicked" max-width="120"> Add playlist </v-btn>
     </div>
     <div v-else>
       <v-text-field

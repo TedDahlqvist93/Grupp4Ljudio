@@ -23,6 +23,7 @@ export default {
   },
   computed: {
   },
+  computed: {},
   methods: {
     ...mapGetters(["getSearchList"]),
     ...mapActions(["addSong"]),
@@ -31,8 +32,9 @@ export default {
         id: song.videoId,
         title: song.name,
         artist: song.artist.name,
-        album: song.album.name
+        album: song.album.name,
       });
+      this.$store.commit("setIsPlaying", true);
     },
     async add(song) {
       let plist = this.$store.state.currentPlaylist
@@ -75,6 +77,8 @@ button {
   width: 100%;
   height: 70%;
   color: #00cec9;
+  top: -15%;
+  left: 1%;
 }
 #buttons {
   display: flex;
