@@ -22,14 +22,20 @@
         max-width="120"
         >Search
       </v-btn>
+      <h1> {{selected}} </h1>
     </v-app-bar>
 
     <!-- List with playlists  -->
-    <v-navigation-drawer app width="300" class=""> </v-navigation-drawer>
+    <v-navigation-drawer app width="300" class=""> 
+      <Songs/>
+    </v-navigation-drawer>
 
     <!-- List with songs -->
     <v-navigation-drawer app clipped right>
       <Register />
+      <div v-if="this.$store.state.user.loggedIn">
+        <Playlist/>
+      </div>
     </v-navigation-drawer>
     <!-- navbar for mobilescreen -->
 
@@ -80,6 +86,8 @@ import Playlist from "./components/Playlist.vue";
 import { mapActions, mapGetters } from "vuex";
 import MediaDisplay from "./components/MediaDisplay.vue";
 import Register from "./components/Register.vue";
+import Songs from "./components/Songs.vue";
+
 export default {
   name: "App",
   components: {
@@ -88,18 +96,37 @@ export default {
     Playlist,
     MediaDisplay,
     Register,
+    Songs,
   },
   data() {
     return {
       value: 1,
       text: "",
       query: "",
+
+      selected: null,
+
       value:"100"
+
     };
+  },
+  methods: {
+    async update() {
+      this.selected = this.$store.state.currentPlaylist
+      await this.$nextTick(() =>{
+        this.selected = this.$store.state.currentPlaylist
+      })
+    }
+  },
+  mounted() {
+    this.$store.dispatch('getUser')
+
+
   },
   computed: {
     
     ...mapGetters(["getSearchList"]),
+    ...mapGetters(["getCurrentPlaylist"]),
   },
   methods: {
     ...mapActions(["searchSong"]),

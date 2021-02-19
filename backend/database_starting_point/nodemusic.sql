@@ -127,13 +127,13 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `songs`;
 
 CREATE TABLE `songs` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT;
+  `id` int(11) unsigned NOT NULL;
   `key` varchar(255) DEFAULT NULL,
   `user_id` int(11) unsigned NOT NULL,
   `title` varchar(255) DEFAULT NULL   ,
   `artist` varchar(255) DEFAULT NULL,
   `album` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`key`),
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `songs` WRITE;
