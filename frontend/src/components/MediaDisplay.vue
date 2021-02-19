@@ -1,7 +1,7 @@
 <template>
   <v-main>
     <div>
-      <youtube :video-id="videoId" ref="youtube" :player-vars="playerVars" fitParent resize></youtube>
+      <youtube :video-id="videoId" ref="youtube" :player-vars="playerVars" @ready="load()"  fitParent resize></youtube>
     </div>
   </v-main>
 </template>
@@ -58,7 +58,10 @@ export default {
     }
   },
   methods: {
-    
+    load(){
+      this.$refs.youtube.player.cueVideoById(this.$store.state.currentSong.id);
+      this.$store.commit("setIsPlaying", false);
+    },
   }
 }
 </script>

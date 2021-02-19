@@ -42,6 +42,8 @@
     <media-display></media-display>
     <v-main>
       <v-card>
+        <h2>Current song: {{song}} </h2>
+        <br>
         <span><SearchResults /></span></v-card
     ></v-main>
     <v-footer app color="transparent" height="140" inset fixed>
@@ -97,7 +99,7 @@ export default {
       value: 1,
       text: "",
       query: "",
-
+      song: "",
       selected: null,
 
       value:"100"
@@ -118,6 +120,9 @@ export default {
 
   },
   computed: {
+    getSong(){
+      return this.$store.state.currentSong.title;
+    },
     
     ...mapGetters(["getSearchList"]),
     ...mapGetters(["getCurrentPlaylist"]),
