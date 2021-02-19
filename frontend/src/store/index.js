@@ -78,9 +78,7 @@ export default new Vuex.Store({
             state.currentSong = status;
         },
         setCurrentPlaylist: (state, status) => {
-            console.log(status)
             state.currentPlaylist = status
-            console.log(state.currentPlayList)
         },
         setAllPlaylists: (state, status) => {
             state.allPlaylists = status;
@@ -93,7 +91,6 @@ export default new Vuex.Store({
         },
         addPlaylist: (state, status) => {
             state.allPlaylists.push(status);
-            console.log(state.allPlaylists)
         }
 
     },
@@ -102,7 +99,6 @@ export default new Vuex.Store({
             await axios.get(`http://localhost:3000/api/yt/songs/${query}`)
                 .then(response => {
                    commit('setSearchList', { search: query, songs: response.data.content})
-                   console.log(response) 
                 })
         },
         async getUser({commit}, data) {
@@ -168,11 +164,12 @@ export default new Vuex.Store({
             })
         },
         async addSong({dispatch}, data) {
-            await axios.post('http://localhost:3000/api/songs', data)
-                .then(response => {
-                    dispatch('getSongs', {userId: data.userId, id: data.id});
-                    return response
-                })
+            await axios.post('http://localhost:3000/api/songs', {data,
+                withCredentials: true
+            }).then(response => {
+                dispatch('getSongs', {userId: data.userId, id: data.id});
+                return response
+            })
         },
         async deleteSong(data) {
             await axios.delete(`http://localhost:3000/api/songs/${data.userId}/${data.id}`)

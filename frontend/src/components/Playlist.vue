@@ -24,7 +24,7 @@
         solo-inverted
         placeholder="Playlist name">
       </v-text-field>
-      <button @click="addPlaylist">Add</button>
+      <button @click="add">Add</button>
       <button @click="clicked">Cancel</button>
     </div>
   </div>
@@ -48,7 +48,6 @@ export default {
         return this.$store.getters.getAllPlaylists;
       },
       playlistSelect(playlist) {
-        console.log(playlist)
         if (playlist.id == this.selected) {
           return `Selected: ${playlist.name}`
         }
@@ -76,7 +75,7 @@ export default {
         this.addClicked = !this.addClicked
         await this.$nextTick();
       },
-      async addPlaylist() {
+      async add() {
         const id = this.$store.state.user.id
         const data = {
             userId: id,
@@ -110,7 +109,6 @@ export default {
           this.setCurrentPlaylist(wrap)
           delete wrap.name
           this.selected = playlist.id
-          console.log(wrap)
           await this.getSongs(wrap)
             .then(() => {this.$store.state.allSongs})
       }

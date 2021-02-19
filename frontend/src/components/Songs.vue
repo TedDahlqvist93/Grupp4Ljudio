@@ -4,10 +4,10 @@
       <h1>Songs</h1>
       <ul>
         <li v-on:click="playSong(song)" 
-            v-for="song in this.songs" 
+            v-for="song in songs" 
             :key="song.id">
             {{ song.title }} - {{ song.artist }}
-            <button v-if="this.$store.state.currentPlaylist !== undefined" v-on:click="remove(song.id)">delete</button>
+            <button v-on:click="remove(song.id)">delete</button>
         </li>
       </ul>
     </div>
@@ -25,7 +25,7 @@ export default {
       return {
         addClicked: false,
         name: '',
-        playlist: this.$store.state.currentPlaylist,
+        playlist: this.$store.getters.getCurrentPlaylist,
       }
     },
     computed: {
@@ -35,7 +35,7 @@ export default {
 
     },
      async mounted() {
-      if (this.store.state.currentPlaylist === undefined){
+      if (this.$store.state.currentPlaylist === undefined){
         return
       }
       const data = { userId: this.$store.state.user.id, id: this.$store.state.currentPlaylist.id }
@@ -64,7 +64,6 @@ export default {
       },
       async update() {
         this.songs = this.$store.state.allSongs;
-        console.log(this.$store.getters.allSongs)
         await this.$nextTick(() =>{
           this.songs = this.$store.state.allSongs;
         })

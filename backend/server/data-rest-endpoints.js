@@ -100,7 +100,6 @@ module.exports = (app, db) => {
             INSERT INTO playlists (user_id, name)
             VALUES (?, ?)`,
            [request.params.userId, request.params.name])
-        console.log(response)
         response.json(result.insertId);
     })
 
@@ -117,7 +116,6 @@ module.exports = (app, db) => {
             WHERE id = ? AND user_id = ?`,
             [request.params.id, request.params.userId])
             .catch((error) => { console.log(error )})
-        console.log(result)
         response.json(result)
     })
 
@@ -136,17 +134,19 @@ module.exports = (app, db) => {
 
     // add song
     app.post('/api/songs/', async (request, response) => {
-        console.log(request.body)
-        console.log(request.data)
+        const data = request.body.data
         if (!request.session.user.loggedIn) {
             response.status(403) // forbidden
             response.json({error: 'not logged in'})
             return;
         }
-        let result = await db.query(
-            `INSERT INTO songs
-            SET id, song_id, name, artist, album
-            WHERE id = ${request.body.id} AND user_id = ${request.body.userId} title = ${request.body.title} AND artist = ${request.body.artist} AND album = ${request.body.album}`)
+        await db.query(`INSERT INTO songs SET id = ?, key = ?, user_id = ?, title = ?, artist = ?, album = ?`,
+            [data.id, data.key, data.userId, data.title, data.artist, data.album])
+            .catch(error => {
+                console.log(error)
+                response.status(400)
+                response.json({error: "database error"})
+            })
         response.json(result);
     })
 

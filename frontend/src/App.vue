@@ -29,7 +29,7 @@
        {{ selected }}
       <Register/>
      <div v-if="this.$store.state.user.loggedIn">
-      <Songs/>
+      <Playlist/>
      </div>
     </v-navigation-drawer>
 
@@ -100,7 +100,6 @@ export default {
   methods: {
     async update() {
       this.selected = this.$store.state.currentPlaylist
-      console.log(this.selected)
       await this.$nextTick(() =>{
         this.selected = this.$store.state.currentPlaylist
       })

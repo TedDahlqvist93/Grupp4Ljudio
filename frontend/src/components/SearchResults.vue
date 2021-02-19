@@ -18,6 +18,7 @@ export default {
   data() {
     return {
       result: this.$store.state.searchList,
+      playlist: this.$store.state.currentPlaylist 
     }
   },
   computed: {
@@ -34,8 +35,12 @@ export default {
       });
     },
     async add(song) {
+      let plist = this.$store.state.currentPlaylist
+      if (plist === undefined) return
       const format = {
+        id: this.$store.state.currentPlaylist.id,
         key: song.videoId,
+        userId: this.$store.state.user.id,
         title: song.name,
         artist: song.artist.name,
         album: song.album.name
