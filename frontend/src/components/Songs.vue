@@ -3,11 +3,13 @@
     <div>
       <h1>Songs</h1>
       <ul>
-        <li v-on:click="playSong(song)" 
+        <li @click="playSong(song)" 
             v-for="song in songs" 
             :key="song.id">
-            {{ song.key }} - {{ song.artist }}
-            <button v-on:click="remove(song)">delete</button>
+            {{ song.title }} - {{ song.artist }}
+            <br>
+            <br>
+            <v-btn v-on:click="remove(song)" width="20%">delete</v-btn>
         </li>
       </ul>
     </div>
@@ -51,6 +53,16 @@ export default {
        ...mapActions(["getSongs"]),
        ...mapActions(["addSongs"]),
        ...mapActions(["deleteSong"]),
+
+       playSong(song) {
+      this.$store.commit("setCurrentSong", {
+        id: song.key,
+        title: song.name,
+        artist: song.artist.name,
+        album: song.album.name,
+      });
+      this.$store.commit("setIsPlaying", true);
+    },
       async remove(data) {
         const userId = this.$store.state.user.id
         const params = {

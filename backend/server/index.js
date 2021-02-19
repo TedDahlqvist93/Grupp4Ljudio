@@ -7,13 +7,15 @@ const app = express();
 
 const cors = require("cors");
 
-app.use(
-  cors({
-    allowedHeaders: ["Content-Type"],
-    origin: "*",
-    preflightContinue: true,
-  })
-);
+app.use(cors({
+    'Access-Control-Allow-Origin': 'http://localhost:8080',
+    'Access-Control-Allow-Credentials': true,
+    'origin': 'http://localhost:8080',
+    'allowedHeaders': ['Content-Type'],
+    'Access-Control-Allow-Methods': '*',
+    'preflightContinue': true,
+    'credentials': true
+}));
 
 
 // add body-parser to express
@@ -43,7 +45,7 @@ const mysql = require("mysql");
 const db = mysql.createConnection({
   host: "127.0.0.1",
   user: "root",
-  password: "some_passwrod",
+  password: "some_pass",
   database: "nodemusic",
 });
 // vi gör om mysql-metoderna connect och query till promise-metoder så att vi kan använda async/await för att vänta på databasen

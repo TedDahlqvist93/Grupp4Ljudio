@@ -3,11 +3,13 @@
     <div>
       <h1>Playlists</h1>
       <ul>
-        <li v-on:click="selectPlaylist(playlist)" 
+        <li @click="selectPlaylist(playlist)" 
             v-for="playlist in this.playlists" 
             :key="playlist.id">
           {{ playlist.name }}
-          <button v-on:click="remove(playlist.id)">delete</button>
+          <br>
+          <br>
+          <v-btn @click="remove(playlist.id)" width="10%" >delete</v-btn>
         </li>
       </ul>
     </div>

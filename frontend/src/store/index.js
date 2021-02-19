@@ -37,7 +37,6 @@ export default new Vuex.Store({
             search: '',
             songs: [],
         },
-        isPlaying: false
     },
     getters: {
         getUser: state => {
@@ -100,14 +99,14 @@ export default new Vuex.Store({
     },
     actions: {
         async searchSong({ commit }, query) {
-            await axios.get('/api/yt/songs/${query}')
+            await axios.get(`http://localhost:3000/api/yt/songs/${query}`)
                 .then(response => {
                    commit('setSearchList', { search: query, songs: response.data.content})
                 })
         },
         // TODO: Hämtar user för att kolla om den kan logga in automatiskt
         async getUser({commit}, data) {
-            await axios.get('/api/login', {data: {data},
+            await axios.post('http://localhost:3000/api/login', {data: {data},
                 withCredentials: true})
                 .then((response) => {
                     console.log(reponse.data)
@@ -115,13 +114,13 @@ export default new Vuex.Store({
             })
         },
         async login({commit}, data) {
-            await axios.post('/api/login', data)
+            await axios.post('http://localhost:3000/api/login', data,)
                 .then(response => {
                     commit('setUser', response.data)
                 })
         },
         async register({commit}, data) {
-            await axios.post('/api/users', data)
+            await axios.post('http://localhost:3000/api/users', data)
                 .then(response => {
                     commit('setUser', response.data)
                 })
@@ -130,7 +129,7 @@ export default new Vuex.Store({
                 })
         },
         async logout({commit}, data) {
-            await axios.delete('/api/login', data)
+            await axios.delete('http://localhost:3000/api/login', data)
                 .then(response => {
                     commit('setUser', {
                         id: '',
@@ -144,35 +143,38 @@ export default new Vuex.Store({
         },
         async getPlaylists({commit}, data) {
             console.log("get lists")
-            await axios.get('/api/playlists/${data}', {
+            console.log(data)
+            await axios.get(`http://localhost:3000/api/playlists/${data}` ,{
                 withCredentials: true
                 }).then(response => {
                     commit('setAllPlaylists', response.data)
+                    
                 })
+                
         },
         async addPlaylist({dispatch}, data) {
-            await axios.post('/api/playlists/${data.userId}/${data.name}')
+            await axios.post(`http://localhost:3000/api/playlists/${data.userId}/${data.name}`)
                 .then(response => {
                     dispatch('getPlaylists', data.userId);
                     return response
                 })
         },
         async deletePlaylist({dispatch}, data) {
-            await axios.delete('/api/playlists/${data.userId}/${data.id}')
+            await axios.delete(`http://localhost:3000/api/playlists/${data.userId}/${data.id}`)
                 .then(response => {
                     dispatch('getPlaylists', data.userId)
                     return response
                 })
         },
         async getSongs({commit}, data) {
-            await axios.get('/api/songs/${data.userId}/${data.id}', {
+            await axios.get(`http://localhost:3000/api/songs/${data.userId}/${data.id}`, {
                 withCredentials: true
             }).then(response => {
                     commit('setAllSongs', response.data)
             })
         },
         async addSong({dispatch}, data) {
-            await axios.post('/api/songs', {data,
+            await axios.post('http://localhost:3000/api/songs', {data,
                 withCredentials: true
             }).then(response => {
                 dispatch('getSongs', {userId: data.userId, id: data.id});
@@ -180,7 +182,7 @@ export default new Vuex.Store({
             })
         },
         async deleteSong({dispatch}, data) {
-            await axios.delete('/api/songs/${data.userId}/${data.id}/${data.key}')
+            await axios.delete(`http://localhost:3000/api/songs/${data.userId}/${data.id}/${data.key}`)
                 .then(response => {
                     dispatch('getSongs', {data: {userId: data.userId, id: data.id}})
                     return response
