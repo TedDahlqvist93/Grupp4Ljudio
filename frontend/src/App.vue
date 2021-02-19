@@ -40,29 +40,23 @@
     ></v-main>
     <v-footer app color="transparent" height="140" inset>
       <v-app-bar color="#424242" rounded inset>
-        <v-btn color="grey" width="15%" @click="playPrevious()">
-          <v-icon>mdi-skip-previous-circle</v-icon>
-        </v-btn>
         <v-btn
           v-if="!this.$store.state.player.isPlaying"
           color="grey"
-          width="15%"
+          width="30%"
           @click="play(true)"
         >
           <v-icon>mdi-play</v-icon>
         </v-btn>
-        <v-btn v-else color="grey" width="15%" @click="play(false)">
+        <v-btn v-else color="grey" width="30%" @click="play(false)">
           <v-icon>mdi-pause</v-icon>
-        </v-btn>
-        <v-btn color="grey" width="15%" @click="playNext()">
-          <v-icon>mdi-skip-next-circle</v-icon>
         </v-btn>
         <v-slider
           min="0"
           max="100"
           value="100"
           thumb-label
-          prepend-icon="mdi-volume-high"
+          append-icon="mdi-volume-high"
           @drag="changeVolume()"
         >
         </v-slider>
