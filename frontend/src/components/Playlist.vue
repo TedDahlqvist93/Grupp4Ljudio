@@ -91,6 +91,9 @@ export default {
         })
       },
       async remove(id) {
+        var r = confirm("Do you want to delete this playlist?");
+
+        if(r === true){
         const userId = this.$store.state.user.id
         const data = {
             userId: userId,
@@ -100,6 +103,10 @@ export default {
         await this.deletePlaylist(data)
         .then(() => {
         })
+        }
+        else{
+          console.log("We dont delete")
+        }
       },
       async selectPlaylist(playlist) {
           const wrap = {

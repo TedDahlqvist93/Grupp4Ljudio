@@ -64,6 +64,10 @@ export default {
       this.$store.commit("setIsPlaying", true);
     },
       async remove(data) {
+
+        var r = confirm("Do you want to delete this song?");
+
+        if(r === true){
         const userId = this.$store.state.user.id
         const params = {
             key: data.key,
@@ -76,6 +80,10 @@ export default {
           
         
         })
+      }
+      else{
+        console.log("We dont delete")
+      }
       },
       async update() {
         this.songs = this.$store.state.allSongs;
